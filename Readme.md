@@ -4,7 +4,7 @@ Argomento da decidere.
 
 ## Relazione
 
-Il comando `make relazione` genera la relazione:
+Il comando `make report` genera la relazione:
 
-- HTML(5) `relazione/relazione.html` (personalizzabile con CSS e template)
-- PDF `relazione/relazione.pdf`
+- HTML(5) `report/report.html` (personalizzabile con CSS e template)
+- PDF `report/report.pdf`

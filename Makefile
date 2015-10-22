@@ -1,4 +1,4 @@
 
-.PHONY: relazione
-relazione:
-	@$(MAKE) $@ --no-print-directory --directory=relazione
+.PHONY: report
+report:
+	@$(MAKE) $@ --no-print-directory --directory=report
