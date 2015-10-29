@@ -6,5 +6,6 @@ report.html
 report.pdf
 
 # Python files
+__pycache__/
 *.pyc
 *.pyo
