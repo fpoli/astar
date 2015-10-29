@@ -1,6 +1,6 @@
 # Progetto Intelligenza Artificiale 2015/2016
 
-Argomento da decidere.
+Vindinium (http://vindinium.org/)
 
 ## Relazione
 

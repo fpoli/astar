@@ -1,6 +1,10 @@
-# File temporanei
+# Temporary files
 *~
 
-# Output della relazione
-relazione.html
-relazione.pdf
+# Report files
+report.html
+report.pdf
+
+# Python files
+*.pyc
+*.pyo
