@@ -5,15 +5,12 @@ import requests
 import ujson as json
 
 class Environment:
-	def __init__(self, key):
+	def __init__(self, server_api, game_params):
 		self.status = None
 		self.connection = requests.session()
 
-		# TODO: switch between 'training' mode and 'arena' mode
-		# Maybe extending this Environment class with two classes
-		# TrainingEnvironment and ArenaEnvironment?
-		self.server_api = "http://vindinium.org/api/training"
-		self.game_params = {"key": key, "turns": 1000}
+		self.server_api = server_api
+		self.game_params = game_params
 		self.game_url = None
 
 		self.__create_game()
@@ -84,3 +81,17 @@ class Environment:
 			raise Exception(
 				"HTTP error {0}: {1}".format(res.status_code, res.text)
 			)
+
+
+class TrainingEnvironment(Environment):
+	def __init__(self, key, turns=1000):
+		server_api = "http://vindinium.org/api/training"
+		game_params = {"key": key, "turns": turns}
+		super().__init__(server_api, game_params)
+
+
+class ArenaEnvironment(Environment):
+	def __init__(self, key):
+		server_api = "http://vindinium.org/api/arena"
+		game_params = {"key": key}
+		super().__init__(server_api, game_params)

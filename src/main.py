@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import sys
-from lib.environment import Environment
+from lib.environment import TrainingEnvironment
 
 # Ensure that this script is being executed (not imported)
 assert(__name__ == "__main__")
@@ -13,7 +13,7 @@ if len(sys.argv) < 2:
 
 else:
 	key = sys.argv[1]
-	env = Environment(key)
+	env = TrainingEnvironment(key)
 
 	while True:
 		print("Status:", env.get_status())
