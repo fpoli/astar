@@ -16,9 +16,9 @@ class Environment:
 		self.game_params = {"key": key, "turns": 1000}
 		self.game_url = None
 
-		self.__createGame()
+		self.__create_game()
 
-	def __jsonToStatus(self, json_dict):
+	def __json_to_status(self, json_dict):
 		"""Read the json and return the appropriate Status object.
 
 		This is a private function (denoted by the leading double underscore).
@@ -32,7 +32,7 @@ class Environment:
 
 		return status
 
-	def __createGame(self):
+	def __create_game(self):
 		"""Negotiate and start a new game with the server.
 
 		This is a private function (denoted by the leading double underscore).
@@ -46,13 +46,13 @@ class Environment:
 			json_dict = json.loads(res.text)
 
 			self.game_url = json_dict["playUrl"]
-			self.status = self.__jsonToStatus(json_dict)
+			self.status = self.__json_to_status(json_dict)
 		else:
 			raise Exception(
 				"HTTP error {0}: {1}".format(res.status_code, res.text)
 			)
 
-	def getStatus(self):
+	def get_status(self):
 		"""Get the status of the environment
 
 		return: a Status object, complete with references to Map, Player,
@@ -64,7 +64,7 @@ class Environment:
 
 		return self.status
 
-	def sendAction(self, action):
+	def send_action(self, action):
 		"""Change the environment by executing an action
 
 		action: an Action object.
@@ -79,7 +79,7 @@ class Environment:
 			# Decode json
 			json_dict = json.loads(res.text)
 
-			self.status = self.__jsonToStatus(json_dict)
+			self.status = self.__json_to_status(json_dict)
 		else:
 			raise Exception(
 				"HTTP error {0}: {1}".format(res.status_code, res.text)

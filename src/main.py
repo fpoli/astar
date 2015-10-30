@@ -16,5 +16,5 @@ else:
 	env = Environment(key)
 
 	while True:
-		print("Status:", env.getStatus())
-		env.sendAction("North")
+		print("Status:", env.get_status())
+		env.send_action("North")
