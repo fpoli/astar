@@ -8,13 +8,13 @@ from lib.environment import TrainingEnvironment
 assert(__name__ == "__main__")
 
 if len(sys.argv) < 2:
-	print("Usage: {0} <key>".format(sys.argv[0]))
-	exit(0)
+    print("Usage: {0} <key>".format(sys.argv[0]))
+    exit(0)
 
 else:
-	key = sys.argv[1]
-	env = TrainingEnvironment(key)
+    key = sys.argv[1]
+    env = TrainingEnvironment(key)
 
-	while True:
-		print("Status:", env.get_status())
-		env.send_action("North")
+    while True:
+        print("Status:", env.get_status())
+        env.send_action("North")

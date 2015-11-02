@@ -15,8 +15,8 @@ Per far partire il client: `python3 src/main.py <la-key-del-bot>`
 
 ## Dipendenze
 
-Per installare la libreria `ujson` ho dovuto fare:
+Per installare le dipendenze su `Ubuntu 14.04` ho usato:
 ```
-sudo apt-get install python3-pip
-sudo pip install ujson
+sudo apt-get install python3-pip python3-pep8
+sudo pip3 install ujson
 ```
