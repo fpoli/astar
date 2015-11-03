@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 import requests
 import ujson as json
+from .models import Game, Action
 
 
 class Environment:
@@ -17,18 +17,14 @@ class Environment:
         self.__create_game()
 
     def __json_to_status(self, json_dict):
-        """Read the json and return the appropriate Status object.
+        """Read the json and return the appropriate Game object.
 
         This is a private function (denoted by the leading double underscore).
 
-        return: a Status object, complete with references to Map, Player,
-                Mine and Brasserie objects
+        return: a Game object, complete with references to other models.
         """
 
-        # TODO: build Status, Player, ... objects from json_dict
-        status = json_dict
-
-        return status
+        return Game(json_dict)
 
     def __create_game(self):
         """Negotiate and start a new game with the server.
@@ -51,10 +47,9 @@ class Environment:
             )
 
     def get_status(self):
-        """Get the status of the environment
+        """Get the status of the environment.
 
-        return: a Status object, complete with references to Map, Player,
-                 Mine and Brasserie objects
+        return: a Game object, complete with references to other models.
         """
 
         # Ensure that we created a game before
@@ -63,15 +58,25 @@ class Environment:
         return self.status
 
     def send_action(self, action):
-        """Change the environment by executing an action
+        """Change the environment by executing an action.
 
-        action: an Action object.
+        Args:
+            action (Action): the action to execute.
         """
 
         # Ensure that we created a game before
         assert(self.game_url is not None)
 
-        res = self.connection.post(self.game_url, {"dir": action})
+        command = {
+            Action.north: "North",
+            Action.south: "South",
+            Action.west: "West",
+            Action.east: "East",
+            Action.stay: "Stay"
+        }
+
+        direction = command[action]
+        res = self.connection.post(self.game_url, {"dir": direction})
 
         if res.status_code == 200:
             # Decode json

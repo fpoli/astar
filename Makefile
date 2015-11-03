@@ -4,4 +4,4 @@ report:
 	@$(MAKE) $@ --no-print-directory --directory=report
 
 linter:
-	@pep8 src/
+	@pep8 --ignore="E221" src/
