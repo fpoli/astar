@@ -23,6 +23,6 @@ Il comando `make docs` genera la documentazione html, visibile alla pagina `docs
 
 Per installare le dipendenze su `Ubuntu 14.04` ho usato:
 ```
-sudo apt-get install python3-pip python3-pep8 python3-sphinx
+sudo apt-get install python3-pip python3-sphinx
 sudo pip3 install -r requirements.txt
 ```
