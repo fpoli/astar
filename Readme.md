@@ -2,6 +2,8 @@
 
 Vindinium (http://vindinium.org/)
 
+[![Build Status](https://magnum.travis-ci.com/fpoli/ia1516.svg?token=XpqKLcynjTRxpC4xqqri)](https://magnum.travis-ci.com/fpoli/ia1516)
+
 ## Relazione
 
 Il comando `make report` genera la relazione:

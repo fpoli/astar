@@ -11,8 +11,6 @@ docs:
 	@rm -rf docs/source/api/*
 	@cd src/ && sphinx-apidoc --module-first --force --separate --output-dir=../docs/source/api/ .
 	@$(MAKE) html --no-print-directory --directory=docs
-	@echo ""
-	@echo "See documentation at docs/build/html/index.html"
 
 clean:
 	@$(MAKE) $@ --no-print-directory --directory=docs
