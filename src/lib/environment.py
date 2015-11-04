@@ -2,7 +2,7 @@
 
 import requests
 import ujson as json
-from .models import Game, Action
+from .models import Status, Action
 
 
 class Environment:
@@ -17,14 +17,14 @@ class Environment:
         self.__create_game()
 
     def __json_to_status(self, json_dict):
-        """Read the json and return the appropriate Game object.
+        """Read the json and return the appropriate Status object.
 
         This is a private function (denoted by the leading double underscore).
 
-        return: a Game object, complete with references to other models.
+        return: a Status object, complete with references to other models.
         """
 
-        return Game(json_dict)
+        return Status(json_dict)
 
     def __create_game(self):
         """Negotiate and start a new game with the server.
@@ -49,7 +49,7 @@ class Environment:
     def get_status(self):
         """Get the status of the environment.
 
-        return: a Game object, complete with references to other models.
+        return: a Status object, complete with references to other models.
         """
 
         # Ensure that we created a game before

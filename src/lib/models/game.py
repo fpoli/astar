@@ -7,10 +7,10 @@ from .mine import Mine
 from .tile import Tile
 
 
-class Game(object):
-    """Represents a game.
+class Status(object):
+    """Represents a game status.
 
-    A game object holds information about the game.
+    A status object holds information about the game status.
 
     Attributes:
         id (int): the game id.
