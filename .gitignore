@@ -9,3 +9,7 @@ report.pdf
 __pycache__/
 *.pyc
 *.pyo
+
+# Unnecessary documentation files
+docs/build/doctrees/
+docs/build/html/*.inv

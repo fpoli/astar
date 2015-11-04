@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>lib.models.game &mdash; IA1516 0.1.0 documentation</title>
+    <title>lib.models.status &mdash; IA1516 0.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -29,7 +29,7 @@
   <body role="document">
       <div class="header" role="banner"><h1 class="heading"><a href="../../../index.html">
           <span>IA1516 0.1.0 documentation</span></a></h1>
-        <h2 class="heading"><span>lib.models.game</span></h2>
+        <h2 class="heading"><span>lib.models.status</span></h2>
       </div>
       <div class="topnav" role="navigation" aria-label="top navigation">
       
@@ -41,7 +41,7 @@
       <div class="content">
         
         
-  <h1>Source code for lib.models.game</h1><div class="highlight"><pre>
+  <h1>Source code for lib.models.status</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: UTF-8 -*-</span>
 
 <span class="kn">from</span> <span class="nn">.hero</span> <span class="kn">import</span> <span class="n">Hero</span>
@@ -51,7 +51,7 @@
 <span class="kn">from</span> <span class="nn">.tile</span> <span class="kn">import</span> <span class="n">Tile</span>
 
 
-<div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../../api/lib.models.game.html#lib.models.game.Status">[docs]</a><span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../../api/lib.models.status.html#lib.models.status.Status">[docs]</a><span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represents a game status.</span>
 
 <span class="sd">    A status object holds information about the game status.</span>
@@ -89,7 +89,7 @@
         <span class="c"># Process the state, creating the objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__processState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Status.update"><a class="viewcode-back" href="../../../api/lib.models.game.html#lib.models.game.Status.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<div class="viewcode-block" id="Status.update"><a class="viewcode-back" href="../../../api/lib.models.status.html#lib.models.status.Status.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the game with new information.</span>
 
 <span class="sd">        Notice that, this function does not re-create the objects, just update</span>
@@ -147,7 +147,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="s">&quot;y&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Tile</span><span class="o">.</span><span class="n">spawn</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">heroes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Hero</span><span class="p">(</span><span class="n">hero</span><span class="p">))</span>
 
-<div class="viewcode-block" id="Status.__str__"><a class="viewcode-back" href="../../../api/lib.models.game.html#lib.models.game.Status.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Status.__str__"><a class="viewcode-back" href="../../../api/lib.models.status.html#lib.models.status.Status.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Pretty map.&quot;&quot;&quot;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s">&quot; &quot;</span>
         <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot;-&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>

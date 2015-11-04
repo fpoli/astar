@@ -12,10 +12,10 @@ Submodules
 .. toctree::
 
    lib.models.action
-   lib.models.game
    lib.models.hero
    lib.models.map
    lib.models.mine
+   lib.models.status
    lib.models.tavern
    lib.models.tile
 
