@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib.models.hero module &mdash; IA1516 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IA1516 0.1.0 documentation" href="../index.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>IA1516 0.1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>lib.models.hero module</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-lib.models.hero">
+<span id="lib-models-hero-module"></span><h1>lib.models.hero module<a class="headerlink" href="#module-lib.models.hero" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lib.models.hero.Hero">
+<em class="property">class </em><code class="descclassname">lib.models.hero.</code><code class="descname">Hero</code><span class="sig-paren">(</span><em>hero</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/models/hero.html#Hero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.models.hero.Hero" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Represents a hero in the game.</p>
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.id">
+<code class="descname">id</code><a class="headerlink" href="#lib.models.hero.Hero.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the hero&#8217;s id.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.name">
+<code class="descname">name</code><a class="headerlink" href="#lib.models.hero.Hero.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em></p>
+<p>the bot&#8217;s name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#lib.models.hero.Hero.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em></p>
+<p>the bot&#8217;s id (None in training mode).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.elo">
+<code class="descname">elo</code><a class="headerlink" href="#lib.models.hero.Hero.elo" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the bot&#8217;s ELO (None in training mode).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.crashed">
+<code class="descname">crashed</code><a class="headerlink" href="#lib.models.hero.Hero.crashed" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em></p>
+<p>True if the bot has been disconnected.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.mine_count">
+<code class="descname">mine_count</code><a class="headerlink" href="#lib.models.hero.Hero.mine_count" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the number of mines this hero owns.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.gold">
+<code class="descname">gold</code><a class="headerlink" href="#lib.models.hero.Hero.gold" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>current amount of gold earned by this hero.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.life">
+<code class="descname">life</code><a class="headerlink" href="#lib.models.hero.Hero.life" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>current hero&#8217;s life.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.last_dir">
+<code class="descname">last_dir</code><a class="headerlink" href="#lib.models.hero.Hero.last_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em></p>
+<p>last bot movement (may be None).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.x">
+<code class="descname">x</code><a class="headerlink" href="#lib.models.hero.Hero.x" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the bot&#8217;s position in the X axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.y">
+<code class="descname">y</code><a class="headerlink" href="#lib.models.hero.Hero.y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the bot&#8217;s position in the Y axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.spawn_x">
+<code class="descname">spawn_x</code><a class="headerlink" href="#lib.models.hero.Hero.spawn_x" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the bot&#8217;s spawn position in X.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lib.models.hero.Hero.spawn_y">
+<code class="descname">spawn_y</code><a class="headerlink" href="#lib.models.hero.Hero.spawn_y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>the bot&#8217;s spawn position in Y.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, [athor names].
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
