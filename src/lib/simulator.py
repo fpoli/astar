@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+from copy import copy, deepcopy
+from lib.models import Action, Tile, Position
+
 
 def kill(status, id, killer=None):
     '''Recursively kills a hero.
@@ -32,7 +35,7 @@ def kill(status, id, killer=None):
                 status.heroes[killer].mine_count += 1
 
 
-def simulate(status, action):
+def simulate(original_status, action):
     '''Simulate a movement given a Status.
 
     Arguments:
@@ -42,8 +45,14 @@ def simulate(status, action):
     Returns:
         Status: the next status (as a new object)
     '''
-    id = status.turn % 4
-    hero = status.heroes[id]
+
+    # Clone the status object
+    status = copy(original_status)
+    status.heroes = deepcopy(original_status.heroes)
+    status.mines = deepcopy(original_status.mines)
+
+    hero_id = status.turn % 4 + 1
+    hero = status.heroes[hero_id - 1]
 
     # Compute next position
     dir_by_action = {
@@ -53,36 +62,33 @@ def simulate(status, action):
         Action.east: (1, 0),
         Action.stay: (0, 0)
     }
-    dir = dir_by_action(action)
+    dir = dir_by_action[action]
 
-    x_, y_ = hero.pos.x + dir[0], hero.pos.y + dir[1]
-    hero_ = None
+    dst_pos = Position(hero.pos.x + dir[0], hero.pos.y + dir[1])
 
+    # Checks if there is an anemy
+    enemy = None
     for h in status.heroes:
-        if h.pos.x == x_ and h.pos.y == y_:
-            hero_ = h
+        if h.pos == dst_pos:
+            enemy = h
             break
 
     # Compute side effects of movement
-    tile = status._game.map[x_, y_]
+    tile = status.map[dst_pos]
 
-    if tile == 0 and not hero_:
-        # EMPTY
-        hero.pos.x = x_
-        hero.pos.y = y_
+    if tile == Tile.empty and not enemy:
+        hero.pos = dst_pos
 
-    elif tile == 3:
-        # TAVERN
+    elif tile == Tile.tavern:
         if hero.gold > 2:
             hero.gold -= 2
             hero.life = min(hero.life + 50, 100)
 
-    elif tile == 4:
-        # MINE
-        mine = status.mines[x_, y_]
+    elif tile == Tile.mine:
+        mine = status.mines[dst_pos]
 
         # hero is not the mine's owner
-        if mine != id + 1:
+        if mine.owner != hero_id:
 
             # get mine
             if hero.life > 20:
@@ -91,27 +97,28 @@ def simulate(status, action):
 
                 # remove mine from previous owner
                 if mine is not None:
-                    status.heroes[mine - 1].mine_count -= 1
+                    status.heroes[mine.owner - 1].mine_count -= 1
 
-                status.mines[x_, y_] = id + 1
+                status.mines[dst_pos].owner = hero_id
 
             # dies trying
             else:
-                kill(status, id)
+                kill(status, hero_id)
 
     # Fight
-    for i, h in enumerate(status.heroes):
-        if h == hero:
+    for other_id, other in enumerate(status.heroes):
+        if other == hero:
             continue
 
         # Attack if 1-tile distance
-        if abs(hero.pos.x - h.pos.x) + abs(hero.pos.y - h.pos.y) == 1:
+        if abs(hero.pos.x - other.pos.x) + abs(hero.pos.y - other.pos.y) == 1:
 
-            if h.life > 20:
-                h.life -= 20
+            if other.life > 20:
+                other.life -= 20
 
             else:
-                kill(status, i, id)
+                # Hero kills the other
+                kill(status, other_id, hero_id)
 
     # Mining
     hero.gold += hero.mine_count

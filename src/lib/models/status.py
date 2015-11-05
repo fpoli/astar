@@ -19,7 +19,7 @@ class Status(object):
         turn (int): current turn.
         map (Map): a map instance.
         heroes ([Hero]): a list of Hero instances.
-        mines ([Mine]): a list of Mine instances.
+        mines ({Position -> Mine}): a dictionary with the Mine instances.
     """
 
     def __init__(self, status_dict, map_obj):
@@ -38,14 +38,14 @@ class Status(object):
         # Processed objects
         self.map = map_obj
         self.heroes = []
-        self.mines = []
+        self.mines = {}
 
         # Parse and create mines
         for pos in self.map.mines:
             i = pos.y * self.map.size + pos.x
             tile = status_dict["board"]["tiles"][i * 2: (i + 1) * 2]
             owner = None if tile[1] == "-" else int(tile[1])
-            self.mines.append(Mine(pos, owner))
+            self.mines[pos] = Mine(pos, owner)
 
         # Create heroes
         for hero in status_dict["heroes"]:
@@ -63,10 +63,7 @@ class Status(object):
                     h for h in self.heroes
                     if h.pos.x == x and h.pos.y == y
                 ]
-                mine = [
-                    m for m in self.mines
-                    if m.pos.x == x and m.pos.y == y
-                ]
+                mine = self.mines.get(x, y)
 
                 if tile == Tile.wall:
                     s += "##"

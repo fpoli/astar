@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from models.status import Status
+from lib.models.status import Status
 
 
 class PartialStatus(object):
