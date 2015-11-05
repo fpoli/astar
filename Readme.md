@@ -26,3 +26,11 @@ Per installare le dipendenze su `Ubuntu 14.04` ho usato:
 sudo apt-get install python3-pip python3-sphinx
 sudo pip3 install -r requirements.txt
 ```
+
+## License
+
+The code is based on [https://github.com/renatopp/vindinium-python]
+
+Copyright 2015
+GPL version 3, see [LICENSE.txt](LICENSE.txt)
+
