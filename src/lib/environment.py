@@ -2,29 +2,23 @@
 
 import requests
 import ujson as json
-from lib.models import Status, Action
+from lib.models import Status, Action, Map
 
 
 class Environment:
     def __init__(self, server_api, game_params):
-        self.status = None
         self.connection = requests.session()
 
         self.server_api = server_api
         self.game_params = game_params
-        self.game_url = None
+
+        self.play_url = None
+        self.view_url = None
+        self.token = None
+        self.map = None
+        self.status = None
 
         self.__create_game()
-
-    def __json_to_status(self, json_dict):
-        """Read the json and return the appropriate Status object.
-
-        This is a private function (denoted by the leading double underscore).
-
-        return: a Status object, complete with references to other models.
-        """
-
-        return Status(json_dict)
 
     def __create_game(self):
         """Negotiate and start a new game with the server.
@@ -39,8 +33,11 @@ class Environment:
             # Decode json
             json_dict = json.loads(res.text)
 
-            self.game_url = json_dict["playUrl"]
-            self.status = self.__json_to_status(json_dict)
+            self.play_url = json_dict["playUrl"]
+            self.view_url = json_dict["viewUrl"]
+            self.token = json_dict["token"]
+            self.map = Map(json_dict["game"]["board"]["tiles"])
+            self.status = Status(json_dict["game"], self.map)
         else:
             raise Exception(
                 "HTTP error {0}: {1}".format(res.status_code, res.text)
@@ -52,9 +49,6 @@ class Environment:
         return: a Status object, complete with references to other models.
         """
 
-        # Ensure that we created a game before
-        assert(self.status is not None)
-
         return self.status
 
     def send_action(self, action):
@@ -63,9 +57,6 @@ class Environment:
         Args:
             action (Action): the action to execute.
         """
-
-        # Ensure that we created a game before
-        assert(self.game_url is not None)
 
         command = {
             Action.north: "North",
@@ -76,13 +67,13 @@ class Environment:
         }
 
         direction = command[action]
-        res = self.connection.post(self.game_url, {"dir": direction})
+        res = self.connection.post(self.play_url, {"dir": direction})
 
         if res.status_code == 200:
             # Decode json
             json_dict = json.loads(res.text)
 
-            self.status = self.__json_to_status(json_dict)
+            self.status = Status(json_dict["game"], self.map)
         else:
             raise Exception(
                 "HTTP error {0}: {1}".format(res.status_code, res.text)

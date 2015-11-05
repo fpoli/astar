@@ -1,30 +1,75 @@
 # -*- coding: UTF-8 -*-
 
+from math import sqrt
+from .tile import Tile
+from .tavern import Tavern
+from .position import Position
+
 
 class Map(object):
     """Represents static elements in the game, such as walls, paths, taverns,
     mines and spawn points.
 
+    The y axis points downward.
+
     Attributes:
         size (int): the board size (in a single axis).
+        taverns ([Tavern]): the taverns.
+        mines ([Position]): the position of the mines.
+        __board ([[Tile]]): the board tiles, indexed by x and y.
     """
 
-    def __init__(self, size):
+    def __init__(self, board):
         """Constructor.
 
         Args:
-            size (int): the board size.
+            board (string): the board string received from the server.
         """
-        self.size = size
-        self.__board = [[0 for i in range(size)] for j in range(size)]
+        self.size = int(sqrt(len(board) / 2))
+        assert(self.size * self.size * 2 == len(board))
 
-    def __getitem__(self, key):
-        """Returns an item in the map."""
-        return self.__board[key[0]][key[1]]
+        self.taverns = []
+        self.mines = []
+        self.__board = None
 
-    def __setitem__(self, key, value):
-        """Sets an item in the map."""
-        self.__board[key[0]][key[1]] = value
+        self.__fill_board(board)
+
+    def __fill_board(self, board):
+        # Fill the board with empty tiles
+        self.__board = [[Tile.empty] * self.size for _ in range(self.size)]
+
+        # Parse the board string
+        for y in range(self.size):
+            for x in range(self.size):
+                i = y * self.size + x
+                raw_tile = board[i * 2: (i + 1) * 2]
+
+                if raw_tile == "##":
+                    tile = Tile.wall
+
+                elif raw_tile == "[]":
+                    tile = Tile.tavern
+                    self.taverns.append(Tavern(Position(x, y)))
+
+                elif raw_tile.startswith("$"):
+                    tile = Tile.mine
+                    self.mines.append(Position(x, y))
+
+                elif raw_tile.startswith("@"):
+                    tile = Tile.spawn
+
+                else:
+                    tile = Tile.empty
+
+                self.__board[x][y] = tile
+
+    def __getitem__(self, pos):
+        """Returns an item in the map.
+
+        Args:
+            pos (tuple): the position asked for.
+        """
+        return self.__board[pos[0]][pos[1]]
 
     def __str__(self):
         """Pretty map."""

@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+from .position import Position
+
 
 class Hero(object):
     """Represents a hero in the game.
@@ -14,10 +16,8 @@ class Hero(object):
         gold (int): current amount of gold earned by this hero.
         life (int): current hero's life.
         last_dir (string): last bot movement (may be None).
-        x (int): the bot's position in the X axis.
-        y (int): the bot's position in the Y axis.
-        spawn_x (int): the bot's spawn position in X.
-        spawn_y (int): the bot's spawn position in Y.
+        pos (Position): the bot's position.
+        spawn (Position): the bot's spawn position.
     """
 
     def __init__(self, hero):
@@ -38,7 +38,7 @@ class Hero(object):
         self.gold       = hero["gold"]
         self.life       = hero["life"]
         self.last_dir   = hero.get("lastDir")
-        self.x          = hero["pos"]["y"]
-        self.y          = hero["pos"]["x"]
-        self.spawn_x    = hero["spawnPos"]["y"]
-        self.spawn_y    = hero["spawnPos"]["x"]
+        self.pos        = Position(hero["pos"]["y"],
+                                   hero["pos"]["x"])
+        self.spawn      = Position(hero["spawnPos"]["y"],
+                                   hero["spawnPos"]["x"])

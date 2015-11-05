@@ -1,22 +1,22 @@
 # -*- coding: UTF-8 -*-
 
+from .position import Position
+
 
 class Mine(object):
     """A mine object.
 
     Attributes:
-        x (int): the mine position in X.
-        y (int): the mine position in Y.
+        pos (Position): the mine position.
         owner (int): the hero's id that owns this mine.
     """
 
-    def __init__(self, x, y):
+    def __init__(self, pos, owner=None):
         """Constructor.
 
         Args:
-            x (int): the mine position in X.
-            y (int): the mine position in Y.
+            pos (Position): the mine position.
+            owner (int): the hero's id that owns this mine.
         """
-        self.x = x
-        self.y = y
-        self.owner = None
+        self.pos = pos
+        self.owner = owner

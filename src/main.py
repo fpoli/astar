@@ -20,6 +20,7 @@ if __name__ == "__main__":
         move_actions = [Action.north, Action.south, Action.east, Action.west]
 
         while True:
+            print("View url: ", env.view_url)
             print("Status:\n", env.get_status(), sep="")
             action = random.choice(move_actions)
             env.send_action(action)

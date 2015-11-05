@@ -5,16 +5,13 @@ class Tavern(object):
     """A tavern.
 
     Attributes:
-        x (int): the tarven position in X.
-        y (int): the tarven position in Y.
+        pos (Position): the tarven position.
     """
 
-    def __init__(self, x, y):
+    def __init__(self, pos):
         """Constructor
 
         Args:
-            x (int): the mine position in X.
-            y (int): the mine position in Y.
+            pos (Position): the tarven position.
         """
-        self.x = x
-        self.y = y
+        self.pos = pos

@@ -18,113 +18,70 @@ class Status(object):
           a single hero moves).
         turn (int): current turn.
         map (Map): a map instance.
-        heroes (list): a list of Hero instances.
-        mines (list): a list of Mine instances.
-        taverns (list): a list of Tavern instances.
+        heroes ([Hero]): a list of Hero instances.
+        mines ([Mine]): a list of Mine instances.
     """
 
-    def __init__(self, state):
+    def __init__(self, status_dict, map_obj):
         """Constructor.
 
         Args:
             state (dict): the state object.
         """
         # Constants
-        self.id = state["game"]["id"]
-        self.max_turns = state["game"]["maxTurns"]
+        self.id = status_dict["id"]
+        self.max_turns = status_dict["maxTurns"]
 
         # Variables
-        self.turn = state["game"]["turn"]
+        self.turn = status_dict["turn"]
 
         # Processed objects
-        self.map = None
+        self.map = map_obj
         self.heroes = []
         self.mines = []
-        self.taverns = []
 
-        # Process the state, creating the objects
-        self.__processState(state)
+        # Parse and create mines
+        for pos in self.map.mines:
+            i = pos.y * self.map.size + pos.x
+            tile = status_dict["board"]["tiles"][i * 2: (i + 1) * 2]
+            owner = None if tile[1] == "-" else int(tile[1])
+            self.mines.append(Mine(pos, owner))
 
-    def update(self, state):
-        """Updates the game with new information.
-
-        Notice that, this function does not re-create the objects, just update
-        the current objects with new information.
-
-        Args:
-            state (dict): the state object.
-        """
-        size = state["game"]["board"]["size"]
-        tiles = state["game"]["board"]["tiles"]
-        heroes = state["game"]["heroes"]
-
-        self.turn = state["game"]["turn"]
-
-        for hero, hero_state in zip(self.heroes, heroes):
-            hero.crashed    = hero_state["crashed"]
-            hero.mine_count = hero_state["mineCount"]
-            hero.gold       = hero_state["gold"]
-            hero.life       = hero_state["life"]
-            hero.last_dir   = hero_state.get("lastDir")
-            hero.x          = hero_state["pos"]["y"]
-            hero.y          = hero_state["pos"]["x"]
-
-        for mine in self.mines:
-            char = tiles[mine.x * 2 + mine.y * 2 * size + 1]
-            mine.owner = None if char == "-" else int(char)
-
-    def __processState(self, state):
-        """Process the state."""
-        # helper variables
-        board = state["game"]["board"]
-        size = board["size"]
-        tiles = board["tiles"]
-        tiles = [tiles[i:i + 2] for i in range(0, len(tiles), 2)]
-
-        # run through the map and update map, mines and taverns
-        self.map = Map(size)
-        for y in range(size):
-            for x in range(size):
-                tile = tiles[y * size + x]
-                if tile == "##":
-                    self.map[x, y] = Tile.wall
-                elif tile == "[]":
-                    self.map[x, y] = Tile.tavern
-                    self.taverns.append(Tavern(x, y))
-                elif tile.startswith("$"):
-                    self.map[x, y] = Tile.mine
-                    self.mines.append(Mine(x, y))
-                else:
-                    self.map[x, y] = Tile.empty
-
-        # create heroes
-        for hero in state["game"]["heroes"]:
-            pos = hero["spawnPos"]
-            self.map[pos["y"], pos["x"]] = Tile.spawn
+        # Create heroes
+        for hero in status_dict["heroes"]:
             self.heroes.append(Hero(hero))
 
     def __str__(self):
         """Pretty map."""
         s = " "
-        s += "-" * (self.map.size) + "\n"
+        s += "-" * 2 * self.map.size + "\n"
         for y in range(self.map.size):
             s += "|"
             for x in range(self.map.size):
                 tile = self.map[x, y]
-                hero = [h for h in self.heroes if h.x == x and h.y == y]
+                hero = [
+                    h for h in self.heroes
+                    if h.pos.x == x and h.pos.y == y
+                ]
+                mine = [
+                    m for m in self.mines
+                    if m.pos.x == x and m.pos.y == y
+                ]
 
                 if tile == Tile.wall:
-                    s += "."
+                    s += "##"
                 elif any(hero):
+                    s += "@"
                     s += str(hero[0].id)
                 elif tile == Tile.spawn:
-                    s += "s"
-                elif tile == Tile.mine:
-                    s += "M"
+                    s += "<>"
+                elif any(mine):
+                    s += "$"
+                    s += "-" if mine[0].owner is None else str(mine[0].owner)
                 elif tile == Tile.tavern:
-                    s += "T"
+                    s += "[]"
                 else:
-                    s += " "
+                    s += "  "
             s += "|\n"
-        s += " " + "-" * (self.map.size)
+        s += " " + "-" * 2 * self.map.size
         return s
