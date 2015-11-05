@@ -61,9 +61,9 @@ class Status(object):
                 tile = self.map[x, y]
                 hero = [
                     h for h in self.heroes
-                    if h.pos.x == x and h.pos.y == y
+                    if h.pos == (x, y)
                 ]
-                mine = self.mines.get(x, y)
+                mine = self.mines.get((x, y))
 
                 if tile == Tile.wall:
                     s += "##"
@@ -71,10 +71,10 @@ class Status(object):
                     s += "@"
                     s += str(hero[0].id)
                 elif tile == Tile.spawn:
-                    s += "<>"
-                elif any(mine):
+                    s += ".."
+                elif mine:
                     s += "$"
-                    s += "-" if mine[0].owner is None else str(mine[0].owner)
+                    s += "-" if mine.owner is None else str(mine.owner)
                 elif tile == Tile.tavern:
                     s += "[]"
                 else:

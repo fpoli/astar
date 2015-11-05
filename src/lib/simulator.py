@@ -4,46 +4,45 @@ from copy import copy, deepcopy
 from lib.models import Action, Tile, Position
 
 
-def kill(status, id, killer=None):
+def __kill(status, hero_id, killer_id=None):
     '''Recursively kills a hero.
 
     Arguments:
-        status (Status): the game status.
-        id (int): the id of the hero to be killed.
-        killer (int | None): the id of the killed.
+        status (Status): the (mutable) game status.
+        hero_id (int): the id of the killed hero.
+        killer_id (int | None): the id of the killer.
     '''
-    hero = status.heroes[id]
+    hero = status.heroes[hero_id - 1]
 
-    for i, h in enumerate(status.heroes):
-        if h == hero:
+    for other_id, other in enumerate(status.heroes, start=1):
+        if other_id == hero_id:
             continue
 
-        if h.pos.x == hero.spawn.x and h.pos.y == hero.spawn.y:
-            kill(status, i)
+        if other.pos == hero.spawn:
+            __kill(status, other_id)
 
-    hero.pos.x = hero.spawn.x
-    hero.pos.y = hero.spawn.y
+    hero.pos = hero.spawn
     hero.mine_count = 0
     hero.life = 100
 
-    for pos, value in status.mines.iteritems():
-        if value == id + 1:
-            if killer is None:
-                status.mines[pos] = None
+    for pos, mine in status.mines.iteritems():
+        if mine.owner == hero_id:
+            if killer_id is None:
+                status.mines[pos].owner = None
             else:
-                status.mines[pos] = killer + 1
-                status.heroes[killer].mine_count += 1
+                status.mines[pos].owner = killer_id
+                status.heroes[killer_id - 1].mine_count += 1
 
 
 def simulate(original_status, action):
     '''Simulate a movement given a Status.
 
     Arguments:
-        status (State): the game status.
+        status (Status): the game status. This will not be modified.
         action (Action): the action to simulate.
 
     Returns:
-        Status: the next status (as a new object)
+        Status: the next status (a new object)
     '''
 
     # Clone the status object
@@ -68,9 +67,9 @@ def simulate(original_status, action):
 
     # Checks if there is an anemy
     enemy = None
-    for h in status.heroes:
-        if h.pos == dst_pos:
-            enemy = h
+    for other in status.heroes:
+        if other.pos == dst_pos:
+            enemy = other
             break
 
     # Compute side effects of movement
@@ -101,13 +100,13 @@ def simulate(original_status, action):
 
                 status.mines[dst_pos].owner = hero_id
 
-            # dies trying
+            # Hero dies trying
             else:
-                kill(status, hero_id)
+                __kill(status, hero_id, None)
 
     # Fight
-    for other_id, other in enumerate(status.heroes):
-        if other == hero:
+    for other_id, other in enumerate(status.heroes, start=1):
+        if other_id == hero_id:
             continue
 
         # Attack if 1-tile distance
@@ -118,7 +117,7 @@ def simulate(original_status, action):
 
             else:
                 # Hero kills the other
-                kill(status, other_id, hero_id)
+                __kill(status, other_id, hero_id)
 
     # Mining
     hero.gold += hero.mine_count
