@@ -33,6 +33,14 @@ Per generare la documentazione html:
 Sarà visibile alla pagina `docs/build/html/index.html`.
 
 
+## Test automatici
+
+Per eseguire linter e test:
+
+	make linter
+	make test
+
+
 ## Dipendenze
 
 Per installare le dipendenze su `Ubuntu 14.04`:

@@ -35,8 +35,8 @@ class Map(object):
         self.__fill_board(board)
 
     def __fill_board(self, board):
-        # Fill the board with empty tiles
-        self.__board = [[Tile.empty] * self.size for _ in range(self.size)]
+        # Prepare the board
+        self.__board = [[None] * self.size for _ in range(self.size)]
 
         # Parse the board string
         for y in range(self.size):
@@ -68,8 +68,15 @@ class Map(object):
 
         Args:
             pos (tuple): the position asked for.
+
+        Returns:
+            Tile | None: the tile, None if the position is outside the map).
         """
-        return self.__board[pos[0]][pos[1]]
+        if (pos[0] < 0 or pos[1] < 0 or
+                pos[0] > self.size or pos[1] > self.size):
+            return None
+        else:
+            return self.__board[pos[0]][pos[1]]
 
     def __str__(self):
         """Pretty map."""

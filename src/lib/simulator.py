@@ -25,7 +25,7 @@ def __kill(status, hero_id, killer_id=None):
     hero.mine_count = 0
     hero.life = 100
 
-    for pos, mine in status.mines.iteritems():
+    for pos, mine in status.mines.items():
         if mine.owner == hero_id:
             if killer_id is None:
                 status.mines[pos].owner = None
@@ -95,7 +95,7 @@ def simulate(original_status, action):
                 hero.mine_count += 1
 
                 # remove mine from previous owner
-                if mine is not None:
+                if mine.owner is not None:
                     status.heroes[mine.owner - 1].mine_count -= 1
 
                 status.mines[dst_pos].owner = hero_id
@@ -126,3 +126,5 @@ def simulate(original_status, action):
     hero.life = max(hero.life - 1, 1)
 
     status.turn += 1
+
+    return status

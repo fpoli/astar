@@ -1,7 +1,9 @@
 CURR_DIR := $(shell pwd)
 BOT_KEY := $(shell cat bot.key)
 
-.PHONY: report start linter test docs clean
+.PHONY: default report start linter test docs clean
+
+default: start
 
 report:
 	@echo "(*) Generate report..."
@@ -14,7 +16,12 @@ start:
 
 linter:
 	@echo "(*) Run linter..."
-	@pep8 --ignore="E221" src/
+	@pep8 --ignore="E221" src/ test/
+
+test:
+	@echo "(*) Run tests..."
+	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/:$(CURR_DIR)/test/" \
+		python3 -m "nose" --nocapture -w test/
 
 test:
 	@echo "(*) Run tests..."
