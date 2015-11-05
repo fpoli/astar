@@ -12,3 +12,6 @@ __pycache__/
 
 # Unnecessary documentation files
 docs/build/
+
+# Secret files
+bot.key

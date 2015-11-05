@@ -4,6 +4,7 @@ Vindinium (http://vindinium.org/)
 
 [![Build Status](https://magnum.travis-ci.com/fpoli/ia1516.svg?token=XpqKLcynjTRxpC4xqqri)](https://magnum.travis-ci.com/fpoli/ia1516)
 
+
 ## Relazione
 
 Il comando `make report` genera la relazione:
@@ -11,21 +12,34 @@ Il comando `make report` genera la relazione:
 - HTML(5) `report/report.html` (personalizzabile con CSS e template)
 - PDF `report/report.pdf`
 
+
 ## Utilizzo
 
-Per far partire il client: `python3 src/main.py <la-key-del-bot>`
+Crea un file `bot.key` contentente la key del bot:
+
+	echo la-key-del-bot > bot.key
+
+Successivamente, per far partire il client:
+
+	make start
+
 
 ## Documentazione
 
-Il comando `make docs` genera la documentazione html, visibile alla pagina `docs/build/html/index.html`.
+Per generare la documentazione html:
+
+	make docs
+
+Sarà visibile alla pagina `docs/build/html/index.html`.
+
 
 ## Dipendenze
 
-Per installare le dipendenze su `Ubuntu 14.04` ho usato:
-```
-sudo apt-get install python3-pip python3-sphinx
-sudo pip3 install -r requirements.txt
-```
+Per installare le dipendenze su `Ubuntu 14.04`:
+
+	sudo apt-get install python3-pip python3-sphinx
+	sudo pip3 install -r requirements.txt
+
 
 ## License
 
@@ -34,4 +48,3 @@ The code is based on [renatopp/vindinium-python](https://github.com/renatopp/vin
 Copyright 2015.
 
 Distributed under the GNU GPL version 3, see [LICENSE.txt](LICENSE.txt)
-

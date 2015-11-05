@@ -1,8 +1,14 @@
+CURR_DIR := $(shell pwd)
+BOT_KEY := $(shell cat bot.key)
 
 .PHONY: report linter docs clean
 
 report:
 	@$(MAKE) $@ --no-print-directory --directory=report
+
+start:
+	@PYTHONPATH="$(CURR_DIR)/src/:$${PYTHONPATH}" \
+		./src/main.py $(BOT_KEY)
 
 linter:
 	@pep8 --ignore="E221" src/
