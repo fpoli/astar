@@ -2,7 +2,7 @@
 
 import requests
 import ujson as json
-from .models import Status, Action
+from lib.models import Status, Action
 
 
 class Environment:
