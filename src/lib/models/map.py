@@ -73,7 +73,7 @@ class Map(object):
             Tile | None: the tile, None if the position is outside the map).
         """
         if (pos[0] < 0 or pos[1] < 0 or
-                pos[0] > self.size or pos[1] > self.size):
+                pos[0] >= self.size or pos[1] >= self.size):
             return None
         else:
             return self.__board[pos[0]][pos[1]]
