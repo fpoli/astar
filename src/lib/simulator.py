@@ -75,7 +75,7 @@ def simulate(original_status, action):
     # Compute side effects of movement
     tile = status.map[dst_pos]
 
-    if tile == Tile.empty and not enemy:
+    if (tile == Tile.empty or tile == Tile.spawn) and not enemy:
         hero.pos = dst_pos
 
     elif tile == Tile.tavern:
