@@ -9,3 +9,4 @@ Please update this whenever you do something.
 * 05/11/15 23.30 - 01.30: Implementing core/environment functions (Marco)
 * 06/11/15 09.30 - 12.00: Implementing core/environment functions (Marco)
 * 06/11/15 13.00 - 14.30: Debugging simulator (Federico)
+* 06/11/15 20.00 - 21.00: Paper and documentation hunting (Marco)
