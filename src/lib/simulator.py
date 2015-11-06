@@ -61,9 +61,9 @@ def simulate(original_status, action):
         Action.east: (1, 0),
         Action.stay: (0, 0)
     }
-    dir = dir_by_action[action]
+    direction = dir_by_action[action]
 
-    dst_pos = Position(hero.pos.x + dir[0], hero.pos.y + dir[1])
+    dst_pos = Position(hero.pos.x + direction[0], hero.pos.y + direction[1])
 
     # Checks if there is an anemy
     enemy = None

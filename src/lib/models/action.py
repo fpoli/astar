@@ -9,8 +9,8 @@ def str_to_action(s):
     conversion = {
         "North": Action.north,
         "South": Action.south,
-        "East": Action.west,
-        "West": Action.east,
+        "East": Action.east,
+        "West": Action.west,
         "Stay": Action.stay
     }
     assert(s in conversion)
