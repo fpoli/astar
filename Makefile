@@ -23,11 +23,6 @@ test:
 	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/:$(CURR_DIR)/test/" \
 		python3 -m "nose" --nocapture -w test/
 
-test:
-	@echo "(*) Run tests..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/:$(CURR_DIR)/test/" \
-		python3 -m "nose" --nocapture -w test/
-
 docs: clean
 	@echo "(*) Generate documentation..."
 	@cd src/ && sphinx-apidoc --module-first --force --separate --output-dir=../docs/source/api/ .
