@@ -48,7 +48,7 @@ class Hero(EqualityMixin):
 
     def __str__(self):
         return (
-            "Hero {id}: {name} ({x}, {y}) {life}/100 {gold}$ " +
+            "Hero {id}: {name:8} ({x:-2}, {y:-2}) {life:-3}/100 {gold:-3}$ " +
             "({mines:+})"
         ).format(
             id=self.id,

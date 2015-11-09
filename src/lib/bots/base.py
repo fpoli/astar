@@ -6,6 +6,7 @@ from lib.models.action import Action
 class BaseBot(object):
     def __init__(self):
         self.status = None
+        self.id = None
 
     def sense(self, env):
         """Retrieve the status of the game from the environment.
@@ -14,6 +15,7 @@ class BaseBot(object):
             env (Environment): the environment with the game status.
         """
         self.status = env.get_status()
+        self.id = env.hero_id
 
     def possible_actions(self):
         """Returns the list of possible actions in the current status.
