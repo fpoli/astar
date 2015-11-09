@@ -56,9 +56,6 @@ class Map(EqualityMixin):
                     tile = Tile.mine
                     self.mines.append(Position(x, y))
 
-                elif raw_tile.startswith("@"):
-                    tile = Tile.spawn
-
                 else:
                     tile = Tile.empty
 
