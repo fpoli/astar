@@ -34,11 +34,11 @@ def __kill(status, hero_id, killer_id=None):
                 status.heroes[killer_id - 1].mine_count += 1
 
 
-def simulate(original_status, action):
+def simulate_turn(original_status, action):
     '''Simulate a movement given a Status.
 
     Arguments:
-        status (Status): the game status. This will not be modified.
+        original_status (Status): the game status. This will not be modified.
         action (Action): the action to simulate.
 
     Returns:
@@ -127,4 +127,24 @@ def simulate(original_status, action):
 
     status.turn += 1
 
+    return status
+
+
+def simulate(original_status, actions):
+    '''Simulate a round (4 hero actions)
+
+    Arguments:
+        original_status (Status): the game status. This will not be modified.
+        actions (tuple of 4 Actions): the actions, ordered by id, of the
+          heroes.
+
+    Returns:
+        Status: the next status (a new object)
+    '''
+    # Check that the next action is executed by hero 1
+    assert(original_status.turn % 4 == 0)
+
+    status = original_status
+    for hero_id in range(1, 5):
+        status = simulate_turn(status, actions[hero_id - 1])
     return status

@@ -14,7 +14,7 @@ class TestSimulateGivesDifferentObjects(unittest.TestCase):
         """Test that simulate returns a new object"""
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
-        next_status = simulate(status, Action.north)
+        next_status = simulate(status, [Action.north] * 4)
         self.assertNotEqual(id(status), id(next_status))
 
     # All the sample status_dict
@@ -44,17 +44,14 @@ class TestSimulateComparingStatus(unittest.TestCase):
         ]
 
         # Run simulations
-        sim1 = simulate(status_before, actions[0])
-        sim2 = simulate(sim1, actions[1])
-        sim3 = simulate(sim2, actions[2])
-        sim4 = simulate(sim3, actions[3])
+        simulated = simulate(status_before, actions)
 
         # Compare
         for i in range(1):
             # TODO: define equality operator on Status objects
             self.assertEqual(
                 status_after.heroes[i].pos,
-                sim4.heroes[i].pos,
+                simulated.heroes[i].pos,
                 msg=(
                     "Before:\n{before}\n" +
                     "Actions: {actions}\n" +
@@ -65,7 +62,7 @@ class TestSimulateComparingStatus(unittest.TestCase):
                     before=status_before,
                     actions=actions,
                     after=status_after,
-                    sim=sim4,
+                    sim=simulated,
                     b_id=status_before.id,
                     b_turn=status_before.turn,
                     a_id=status_after.id,
@@ -74,15 +71,15 @@ class TestSimulateComparingStatus(unittest.TestCase):
             )
             self.assertEqual(
                 status_after.heroes[i].life,
-                sim4.heroes[i].life
+                simulated.heroes[i].life
             )
             self.assertEqual(
                 status_after.heroes[i].gold,
-                sim4.heroes[i].gold
+                simulated.heroes[i].gold
             )
             self.assertEqual(
                 status_after.heroes[i].mine_count,
-                sim4.heroes[i].mine_count
+                simulated.heroes[i].mine_count
             )
 
     tests = get_sample_status_pairs()
