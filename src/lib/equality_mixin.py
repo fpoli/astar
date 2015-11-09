@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+
 class EqualityMixin(object):
     """This mixin implements a default comparison operator, such that instances
     of the same class with the same parameter's value will be equal.
