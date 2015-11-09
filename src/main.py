@@ -4,6 +4,7 @@
 import sys
 from lib.environment import TrainingEnvironment
 from lib.models import Action
+from lib.bots.random import RandomBot
 import random
 
 # Ensure that this script is being executed (not imported)
@@ -16,11 +17,12 @@ if __name__ == "__main__":
     else:
         key = sys.argv[1]
         env = TrainingEnvironment(key)
-
-        move_actions = [Action.north, Action.south, Action.east, Action.west]
+        bot = RandomBot()
 
         while True:
             print("View url: ", env.view_url)
             print("Status:\n", env.get_status(), sep="")
-            action = random.choice(move_actions)
-            env.send_action(action)
+            bot.sense(env)
+            actions = bot.possible_actions()
+            action = bot.think(actions)
+            bot.do(env, action)
