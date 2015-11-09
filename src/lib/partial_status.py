@@ -10,6 +10,8 @@ class PartialStatus(object):
     "declared" by some players.
     When every player has declared her action, the partial status evolves
     to a new status.
+    This class follows the Decorator Design Pattern (acting as a decorator
+    for the Status class).
 
     Attributes:
         status (Status): current game status
