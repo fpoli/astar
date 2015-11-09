@@ -5,13 +5,18 @@ from lib.models import Action, Tile, Position
 
 
 def __kill(status, hero_id, killer_id=None):
-    '''Recursively kills a hero.
+    """Recursively kills a hero.
+
+    The status given as parameter will be used to store the result.
 
     Arguments:
         status (Status): the (mutable) game status.
         hero_id (int): the id of the killed hero.
         killer_id (int | None): the id of the killer.
-    '''
+
+    Results:
+        The status given as parameter will be used to store the result.
+    """
     hero = status.heroes[hero_id - 1]
 
     for other_id, other in enumerate(status.heroes, start=1):
@@ -34,22 +39,16 @@ def __kill(status, hero_id, killer_id=None):
                 status.heroes[killer_id - 1].mine_count += 1
 
 
-def simulate_turn(original_status, action):
-    '''Simulate a movement given a Status.
+def __simulate_turn(status, action):
+    """Simulate a movement given a Status.
 
     Arguments:
-        original_status (Status): the game status. This will not be modified.
+        status (Status): the (mutable) game status.
         action (Action): the action to simulate.
 
-    Returns:
-        Status: the next status (a new object)
-    '''
-
-    # Clone the status object
-    status = copy(original_status)
-    status.heroes = deepcopy(original_status.heroes)
-    status.mines = deepcopy(original_status.mines)
-
+    Results:
+        The status given as parameter will be used to store the result.
+    """
     hero_id = status.turn % 4 + 1
     hero = status.heroes[hero_id - 1]
 
@@ -87,7 +86,7 @@ def simulate_turn(original_status, action):
     elif tile == Tile.mine:
         mine = status.mines[dst_pos]
 
-        # hero is not the mine's owner
+        # hero is not the mine"s owner
         if mine.owner != hero_id:
 
             # get mine
@@ -131,20 +130,45 @@ def simulate_turn(original_status, action):
     return status
 
 
-def simulate(original_status, actions):
-    '''Simulate a round (4 hero actions)
+def simulate_turn(original_status, action):
+    """Simulate a movement given a Status.
 
     Arguments:
         original_status (Status): the game status. This will not be modified.
-        actions (tuple of 4 Actions): the actions, ordered by hero's id.
+        action (Action): the action to simulate.
 
     Returns:
-        Status: the next status (a new object)
-    '''
+        Status: the next status (a new object).
+    """
+    # Clone the status object
+    status = copy(original_status)
+    status.heroes = deepcopy(original_status.heroes)
+    status.mines = deepcopy(original_status.mines)
+
+    __simulate_turn(status, action)
+
+    return status
+
+
+def simulate(original_status, actions):
+    """Simulate a round (4 hero actions).
+
+    Arguments:
+        original_status (Status): the game status. This will not be modified.
+        actions (tuple of 4 Actions): the actions, ordered by hero"s id.
+
+    Returns:
+        Status: the next status (a new object).
+    """
     # Check that the next action is executed by hero 1
     assert(original_status.turn % 4 == 0)
 
-    status = original_status
+    # Clone the status object
+    status = copy(original_status)
+    status.heroes = deepcopy(original_status.heroes)
+    status.mines = deepcopy(original_status.mines)
+
     for hero_id in range(1, 5):
-        status = simulate_turn(status, actions[hero_id - 1])
+        __simulate_turn(status, actions[hero_id - 1])
+
     return status
