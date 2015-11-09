@@ -64,6 +64,10 @@ class Status(EqualityMixin):
                     h for h in self.heroes
                     if h.pos == (x, y)
                 ]
+                spawn = [
+                    h for h in self.heroes
+                    if h.spawn == (x, y)
+                ]
                 mine = self.mines.get((x, y))
 
                 if tile == Tile.wall:
@@ -71,7 +75,7 @@ class Status(EqualityMixin):
                 elif any(hero):
                     s += "@"
                     s += str(hero[0].id)
-                elif tile == Tile.spawn:
+                elif any(spawn):
                     s += ".."
                 elif mine:
                     s += "$"

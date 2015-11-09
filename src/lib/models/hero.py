@@ -47,8 +47,10 @@ class Hero(EqualityMixin):
                                    hero["spawnPos"]["x"])
 
     def __str__(self):
-        return ("Hero {id}: {name} ({x}, {y}) {life}/100 {gold}$ " +
-        "({mines:+})".format(
+        return (
+            "Hero {id}: {name} ({x}, {y}) {life}/100 {gold}$ " +
+            "({mines:+})"
+        ).format(
             id=self.id,
             name=self.name,
             x=self.pos.x,
@@ -56,4 +58,4 @@ class Hero(EqualityMixin):
             life=self.life,
             gold=self.gold,
             mines=self.mine_count
-        ))
+        )
