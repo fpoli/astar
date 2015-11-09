@@ -2,11 +2,13 @@
 
 import unittest
 from collections import namedtuple
+from nose.tools import nottest
 
 TestIO = namedtuple("Test", "input output")
 
 
-def generateTests(cls):
+@nottest
+def generate_tests(cls):
     """Class decorator that generates a test method for each item in a list.
 
     Requires:

@@ -1,12 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 from math import sqrt
+from lib.equality_mixin import EqualityMixin
 from .tile import Tile
 from .tavern import Tavern
 from .position import Position
 
 
-class Map(object):
+class Map(EqualityMixin):
     """Represents static elements in the game, such as walls, paths, taverns,
     mines and spawn points.
 

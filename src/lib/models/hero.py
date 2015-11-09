@@ -1,9 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+from lib.equality_mixin import EqualityMixin
 from .position import Position
+from .action import str_to_action
 
 
-class Hero(object):
+class Hero(EqualityMixin):
     """Represents a hero in the game.
 
     Attributes:
@@ -37,8 +39,20 @@ class Hero(object):
         self.mine_count = hero["mineCount"]
         self.gold       = hero["gold"]
         self.life       = hero["life"]
-        self.last_dir   = hero.get("lastDir")
+        last_dir_raw = hero.get("lastDir")
+        self.last_dir = str_to_action(last_dir_raw) if last_dir_raw else None
         self.pos        = Position(hero["pos"]["y"],
                                    hero["pos"]["x"])
         self.spawn      = Position(hero["spawnPos"]["y"],
                                    hero["spawnPos"]["x"])
+
+    def __str__(self):
+        return "Hero {id}: {name} ({x}, {y}) {life}/100 {gold}$ ({mines:+})".format(
+            id=self.id,
+            name=self.name,
+            x=self.pos.x,
+            y=self.pos.y,
+            life=self.life,
+            gold=self.gold,
+            mines=self.mine_count
+        )

@@ -5,9 +5,10 @@ from .map import Map
 from .tavern import Tavern
 from .mine import Mine
 from .tile import Tile
+from lib.equality_mixin import EqualityMixin
 
 
-class Status(object):
+class Status(EqualityMixin):
     """Represents a game status.
 
     A status object holds information about the game status.
@@ -81,4 +82,7 @@ class Status(object):
                     s += "  "
             s += "|\n"
         s += " " + "-" * 2 * self.map.size
+        for i in range(4):
+            s += "\n"
+            s += str(self.heroes[i])
         return s

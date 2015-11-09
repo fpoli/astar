@@ -64,6 +64,7 @@ def simulate_turn(original_status, action):
     direction = dir_by_action[action]
 
     dst_pos = Position(hero.pos.x + direction[0], hero.pos.y + direction[1])
+    hero.last_dir = action
 
     # Checks if there is an anemy
     enemy = None

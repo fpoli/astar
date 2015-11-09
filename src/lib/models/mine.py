@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 from .position import Position
+from lib.equality_mixin import EqualityMixin
 
 
-class Mine(object):
+class Mine(EqualityMixin):
     """A mine object.
 
     Attributes:

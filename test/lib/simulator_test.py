@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
-from test import generateTests
+from test import generate_tests
 from status_samples import get_status_samples, get_sample_status_pairs
 from lib.models import Map, Status, Action, str_to_action
 from lib.simulator import simulate
 
 
-@generateTests
+@generate_tests
 class TestSimulateGivesDifferentObjects(unittest.TestCase):
 
     def perform_test(self, status_dict):
@@ -25,7 +25,7 @@ class TestSimulateGivesDifferentObjects(unittest.TestCase):
     ]
 
 
-@generateTests
+@generate_tests
 class TestSimulateComparingStatus(unittest.TestCase):
 
     def perform_test(self, status_pair):
@@ -39,7 +39,7 @@ class TestSimulateComparingStatus(unittest.TestCase):
 
         # Get actions
         actions = [
-            str_to_action(status_after.heroes[i].last_dir)
+            status_after.heroes[i].last_dir
             for i in range(4)
         ]
 
@@ -47,39 +47,25 @@ class TestSimulateComparingStatus(unittest.TestCase):
         simulated = simulate(status_before, actions)
 
         # Compare
-        for i in range(1):
-            # TODO: define equality operator on Status objects
-            self.assertEqual(
-                status_after.heroes[i].pos,
-                simulated.heroes[i].pos,
-                msg=(
-                    "Before:\n{before}\n" +
-                    "Actions: {actions}\n" +
-                    "After:\n{after}\n" +
-                    "Simulated:\n{sim}\n" +
-                    "Round: {b_id} {b_turn} --> {a_id} {a_turn}"
-                ).format(
-                    before=status_before,
-                    actions=actions,
-                    after=status_after,
-                    sim=simulated,
-                    b_id=status_before.id,
-                    b_turn=status_before.turn,
-                    a_id=status_after.id,
-                    a_turn=status_after.turn
-                )
+        self.assertEqual(
+            status_after,
+            simulated,
+            msg=(
+                "Before:\n{before}\n" +
+                "Actions: {actions}\n" +
+                "After:\n{after}\n" +
+                "Simulated:\n{sim}\n" +
+                "Round: {b_id} {b_turn} --> {a_id} {a_turn}"
+            ).format(
+                before=status_before,
+                actions=actions,
+                after=status_after,
+                sim=simulated,
+                b_id=status_before.id,
+                b_turn=status_before.turn,
+                a_id=status_after.id,
+                a_turn=status_after.turn
             )
-            self.assertEqual(
-                status_after.heroes[i].life,
-                simulated.heroes[i].life
-            )
-            self.assertEqual(
-                status_after.heroes[i].gold,
-                simulated.heroes[i].gold
-            )
-            self.assertEqual(
-                status_after.heroes[i].mine_count,
-                simulated.heroes[i].mine_count
-            )
+        )
 
     tests = get_sample_status_pairs()
