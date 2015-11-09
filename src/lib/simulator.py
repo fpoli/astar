@@ -135,8 +135,7 @@ def simulate(original_status, actions):
 
     Arguments:
         original_status (Status): the game status. This will not be modified.
-        actions (tuple of 4 Actions): the actions, ordered by id, of the
-          heroes.
+        actions (tuple of 4 Actions): the actions, ordered by hero's id.
 
     Returns:
         Status: the next status (a new object)
