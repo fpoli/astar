@@ -21,8 +21,7 @@ if __name__ == "__main__":
 
         while True:
             print("View url: ", env.view_url)
-            print("Status:\n", env.get_status(), sep="")
-            bot.sense(env)
-            actions = bot.possible_actions()
-            action = bot.think(actions)
-            bot.do(env, action)
+            status = env.get_status()
+            print("Status:\n", status, sep="")
+            action = bot.think(status)
+            env.send_action(action)

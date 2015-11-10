@@ -5,13 +5,14 @@ from .base import BaseBot
 
 
 class RandomBot(BaseBot):
-    def think(self, actions):
+    def think(self, status):
         """Chooses a random action.
 
         Arguments:
-            actions ([Action]): the actions among which the bot can choose.
+            status (Status): the game status.
 
         Returns:
             Action: the randomly chosen action.
         """
+        actions = self.possible_actions(status)
         return random.choice(actions)

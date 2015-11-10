@@ -4,43 +4,24 @@ from lib.models.action import Action
 
 
 class BaseBot(object):
-    def __init__(self):
-        self.status = None
-        self.id = None
-
-    def sense(self, env):
-        """Retrieve the status of the game from the environment.
+    def possible_actions(self, status):
+        """Returns the list of possible actions in game status.
 
         Arguments:
-            env (Environment): the environment with the game status.
-        """
-        self.status = env.get_status()
-        self.id = env.hero_id
-
-    def possible_actions(self):
-        """Returns the list of possible actions in the current status.
+            status (Status): the game status.
 
         Returns:
             [Action]: the list of possible actions.
         """
         return list(Action)
 
-    def think(self, actions):
+    def think(self, status):
         """Chooses the action to perform.
 
         Arguments:
-            actions ([Action]): the actions among which the bot can choose.
+            status (Status): the game status.
 
         Returns:
             Action: the chosen action.
         """
         raise Exception("Not implemented")
-
-    def do(self, env, action):
-        """Chooses the action to perform.
-
-        Arguments:
-            env (Environment): the environment with the game status.
-            action (Action): the action to perform on the environment.
-        """
-        env.send_action(action)
