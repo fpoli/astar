@@ -3,7 +3,7 @@
 import unittest
 from test import generate_tests
 from status_samples import get_status_samples, get_sample_status_pairs
-from lib.models import Map, Status, Action, str_to_action
+from lib.models import Map, Status, Action
 from lib.simulator import simulate
 
 

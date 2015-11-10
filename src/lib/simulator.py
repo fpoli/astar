@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from copy import copy, deepcopy
-from lib.models import Action, Tile, Position
+from lib.models import Action, Tile, Position, action_to_dir
 
 
 def __kill(status, hero_id, killer_id=None):
@@ -51,19 +51,11 @@ def __simulate_turn(status, action):
     """
     hero_id = status.turn % 4 + 1
     hero = status.heroes[hero_id - 1]
+    hero.last_dir = action
 
     # Compute next position
-    dir_by_action = {
-        Action.north: (0, -1),
-        Action.south: (0, 1),
-        Action.west: (-1, 0),
-        Action.east: (1, 0),
-        Action.stay: (0, 0)
-    }
-    direction = dir_by_action[action]
-
-    dst_pos = Position(hero.pos.x + direction[0], hero.pos.y + direction[1])
-    hero.last_dir = action
+    direction = action_to_dir(action)
+    dst_pos = hero.pos + direction
 
     # Checks if there is an anemy
     enemy = None
