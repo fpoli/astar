@@ -12,7 +12,7 @@ class TestZeroSumUtility(unittest.TestCase):
 
     def perform_test(self, status_dict):
         """Test that the utility is a zero sum tuple"""
-        
+
         # Build models
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
@@ -22,9 +22,9 @@ class TestZeroSumUtility(unittest.TestCase):
         self.assertEqual(
             sum(utility_tuple), 0,
             msg="Utility is {utility}, but the sum is non-zero: {sum}".format(
-                    utility=utility_tuple,
-                    sum=sum(utility_tuple)
-                )
+                utility=utility_tuple,
+                sum=sum(utility_tuple)
             )
+        )
 
     tests = get_status_samples()

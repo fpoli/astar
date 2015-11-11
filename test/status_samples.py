@@ -48,6 +48,7 @@ def get_status_samples_pairs():
 
     return status_pairs
 
+
 def get_status_samples():
     """Loads status samples files.
 
