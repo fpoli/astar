@@ -3,29 +3,56 @@
 import math
 
 
-def calculate_elo_diff(player_elo, opponent_elo, player_score):
-    """Elo points earned (or lost) by the player against an opponent.
+def calculate_elo_diff(hero_elo, opponent_elo, hero_score):
+    """Elo points earned (or lost) by the hero against an opponent.
 
     Arguments:
-        player_elo (int): the elo of the player.
-        opponent_elo (int): the elo of the opponent.
-        player_score (float): the players score against opponent:
-          - 1   if player defeated opponent
-          - 0.5 in case of draw
-          - 0   if opponent defeated player
+        hero_elo (int): the hero's elo.
+        opponent_elo (int): the opponent's elo.
+        hero_score (float): the hero's score against opponent:
+          * 1   if hero won
+          * 0.5 in case of draw
+          * 0   if opponent won
 
     Returns:
-        int: the elo points earned (or lost, if negative) by the player
+        int: the elo points earned (or lost, if negative) by the hero
           against an opponent.
     """
-    expected = 1 / (1 + math.pow(10, (opponent_elo - player_elo) / 400))
+    expected = 1 / (1 + math.pow(10, (opponent_elo - hero_elo) / 400))
     k_factor = 16
-    diff = k_factor * (player_score - expected)
+    diff = k_factor * (hero_score - expected)
     return int(diff)
 
 
-def hero_utility(status, hero_id):
-    """ Computes the utility function for a hero.
+def calculate_score(status, hero_id, opponent_id):
+    """Calculate the score of hero against opponent.
+
+    Note: the score is not the utiliy.
+
+    Arguments:
+        status (Status): the game status.
+        hero_id (int): the hero's id.
+        opponent_id (int): the opponent's id.
+
+    Returns:
+        int: the hero's score against opponent:
+          * 1   if hero won
+          * 0.5 in case of draw
+          * 0   if opponent won
+    """
+    hero = status.heroes[hero_id - 1]
+    opponent = status.heroes[opponent_id - 1]
+
+    if hero.gold > opponent.gold:
+        return 1
+    elif hero.gold < opponent.gold:
+        return 0
+    else:
+        return 0.5
+
+
+def hero_utility(status, hero_id, scoring_function=calculate_score):
+    """Computes the utility function for a hero.
 
     The utility is the number of points earned in the global rank.
 
@@ -34,6 +61,8 @@ def hero_utility(status, hero_id):
     Arguments:
         status (Status): the final status of a game.
         hero_id (int): the id of the hero.
+        scoring_function: the function that calculates the score between two
+            heroes. (default: calculate_score).
 
     Returns:
         int: the hero utility value.
@@ -54,12 +83,7 @@ def hero_utility(status, hero_id):
 
         opponent = status.heroes[opponent_id - 1]
 
-        if hero.gold > opponent.gold:
-            hero_score = 1
-        elif hero.gold < opponent.gold:
-            hero_score = 0
-        else:
-            hero_score = 0.5
+        hero_score = scoring_function(status, hero_id, opponent_id)
 
         if opponent.elo is None:
             opponent_elo = default_elo
@@ -71,13 +95,15 @@ def hero_utility(status, hero_id):
     return diff
 
 
-def utility(status):
+def utility(status, scoring_function=calculate_score):
     """ Computes the utility function (zero sum) for each hero.
 
     Note: this is a zero sum utility.
 
     Arguments:
         status (Status): the final status of a game.
+        scoring_function: the function that calculates the score between two
+            heroes. (default: calculate_score).
 
     Returns:
         (int, int, int, int): the hero utility value for each hero.
