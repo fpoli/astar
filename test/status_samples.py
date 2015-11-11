@@ -4,12 +4,12 @@ import ujson as json
 import os
 
 
-def get_status_samples():
+def get_status_samples_dict():
     """Loads status samples files.
 
     Returns:
         {game_id, {turn, status_dict}}: a dictionary with all the status
-           samples loaded.
+           samples stored by game and turn.
     """
     status_samples = {}
 
@@ -27,9 +27,15 @@ def get_status_samples():
     return status_samples
 
 
-def get_sample_status_pairs():
+def get_status_samples_pairs():
+    """Loads status samples files.
+
+    Returns:
+        [(status_dict, status_dict)]: a list of pairs of status samples
+          representing consecutive turns.
+    """
     status_pairs = []
-    status_samples = get_status_samples()
+    status_samples = get_status_samples_dict()
 
     for game_id, turns in status_samples.items():
         for turn, status_before in turns.items():
@@ -41,3 +47,15 @@ def get_sample_status_pairs():
                 )
 
     return status_pairs
+
+def get_status_samples():
+    """Loads status samples files.
+
+    Returns:
+        [status_dict]: a list of status samples.
+    """
+    return [
+        item
+        for game in get_status_samples_dict().values()
+        for item in game.values()
+    ]

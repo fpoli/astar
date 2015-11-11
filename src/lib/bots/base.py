@@ -24,4 +24,4 @@ class BaseBot(object):
         Returns:
             Action: the chosen action.
         """
-        raise Exception("Not implemented")
+        raise NotImplementedError

@@ -2,7 +2,7 @@
 
 import unittest
 from test import generate_tests
-from status_samples import get_status_samples, get_sample_status_pairs
+from status_samples import get_status_samples, get_status_samples_pairs
 from lib.models import Map, Status, Action
 from lib.simulator import simulate
 
@@ -12,17 +12,15 @@ class TestSimulateGivesDifferentObjects(unittest.TestCase):
 
     def perform_test(self, status_dict):
         """Test that simulate returns a new object"""
+
+        # Build models
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
         next_status = simulate(status, [Action.north] * 4)
+
         self.assertNotEqual(id(status), id(next_status))
 
-    # All the sample status_dict
-    tests = [
-        item
-        for game in get_status_samples().values()
-        for item in game.values()
-    ]
+    tests = get_status_samples()
 
 
 @generate_tests
@@ -32,7 +30,7 @@ class TestSimulateComparingStatus(unittest.TestCase):
         """Test simulate by comparing simulated status"""
         dict_before, dict_after = status_pair
 
-        # Build states
+        # Build models
         map_obj = Map(dict_before["game"]["board"]["tiles"])
         status_before = Status(dict_before["game"], map_obj)
         status_after = Status(dict_after["game"], map_obj)
@@ -68,4 +66,4 @@ class TestSimulateComparingStatus(unittest.TestCase):
             )
         )
 
-    tests = get_sample_status_pairs()
+    tests = get_status_samples_pairs()
