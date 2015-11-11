@@ -15,13 +15,13 @@ def calculate_elo_diff(hero_elo, opponent_elo, hero_score):
           * 0   if opponent won
 
     Returns:
-        int: the elo points earned (or lost, if negative) by the hero
+        float: the elo points earned (or lost, if negative) by the hero
           against an opponent.
     """
     expected = 1 / (1 + math.pow(10, (opponent_elo - hero_elo) / 400))
     k_factor = 16
     diff = k_factor * (hero_score - expected)
-    return int(diff)
+    return diff
 
 
 def calculate_score(status, hero_id, opponent_id):
@@ -35,7 +35,7 @@ def calculate_score(status, hero_id, opponent_id):
         opponent_id (int): the opponent's id.
 
     Returns:
-        int: the hero's score against opponent:
+        float: the hero's score against opponent:
           * 1   if hero won
           * 0.5 in case of draw
           * 0   if opponent won
@@ -65,7 +65,7 @@ def hero_utility(status, hero_id, scoring_function=calculate_score):
             heroes. (default: calculate_score).
 
     Returns:
-        int: the hero utility value.
+        float: the hero utility value.
     """
 
     diff = 0
@@ -106,7 +106,7 @@ def utility(status, scoring_function=calculate_score):
             heroes. (default: calculate_score).
 
     Returns:
-        (int, int, int, int): the hero utility value for each hero.
+        (float, float, float, float): the hero utility value for each hero.
     """
     return tuple([
         hero_utility(status, i)
