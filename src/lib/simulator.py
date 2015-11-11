@@ -49,7 +49,7 @@ def __simulate_turn(status, action):
     Results:
         The status given as parameter will be used to store the result.
     """
-    hero_id = status.turn % 4 + 1
+    hero_id = status.current_hero()
     hero = status.heroes[hero_id - 1]
     hero.last_dir = action
 
@@ -118,6 +118,7 @@ def __simulate_turn(status, action):
     hero.life = max(hero.life - 1, 1)
 
     status.turn += 1
+    status.finished = status.turn >= status.max_turns
 
     return status
 

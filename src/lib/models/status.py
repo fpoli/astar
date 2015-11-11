@@ -18,6 +18,7 @@ class Status(EqualityMixin):
         max_turns (int): maximum turns of the game (notice that each turn only
           a single hero moves).
         turn (int): current turn.
+        finished (bool): is the game over?
         map (Map): a map instance.
         heroes ([Hero]): a list of Hero instances.
         mines ({Position -> Mine}): a dictionary with the Mine instances.
@@ -35,6 +36,7 @@ class Status(EqualityMixin):
 
         # Variables
         self.turn = status_dict["turn"]
+        self.finished = status_dict["finished"]
 
         # Processed objects
         self.map = map_obj
@@ -90,3 +92,16 @@ class Status(EqualityMixin):
             s += "\n"
             s += str(self.heroes[i])
         return s
+
+    def current_hero(self):
+        """Returns the id of the hero that has to move in this turn."""
+        return self.turn % 4 + 1
+
+    def remaining_turns_of_hero(self, hero_id):
+        """Returns the number of remaining turns for a hero."""
+        remaining_rounds = (self.max_turns - self.turn - 1) // 4
+
+        if hero_id - 1 >= self.turn % 4:
+            return remaining_rounds + 1
+        else:
+            return remaining_rounds
