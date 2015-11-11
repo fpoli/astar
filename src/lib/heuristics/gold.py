@@ -17,7 +17,7 @@ def gold_score(status, hero_id, opponent_id):
     gold_diff = hero_gold - opponent_gold
 
     # Sigmoid function with codomain (0, 1)
-    return ( gold_diff / (1 + abs(gold_diff)) + 1 ) / 2
+    return (gold_diff / (1 + abs(gold_diff)) + 1) / 2
 
 
 def heuristic(status):

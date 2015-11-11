@@ -8,7 +8,7 @@ from lib.models import Status, Map
 
 
 @generate_tests
-class TestZeroSumUtility(unittest.TestCase):
+class TestUtilityZeroSum(unittest.TestCase):
 
     def perform_test(self, status_dict):
         """Test that the utility is a zero sum tuple"""

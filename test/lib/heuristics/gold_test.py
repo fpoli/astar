@@ -8,7 +8,7 @@ from lib.models import Status, Map
 
 
 @generate_tests
-class TestZeroSumGoldHeuristic(unittest.TestCase):
+class TestGoldHeuristicZeroSum(unittest.TestCase):
 
     def perform_test(self, status_dict):
         """Test that the heuristic is a zero sum tuple"""
@@ -21,8 +21,8 @@ class TestZeroSumGoldHeuristic(unittest.TestCase):
 
         self.assertEqual(
             sum(heuristic_tuple), 0,
-            msg="heuristic is {heuristic}, but the sum is non-zero: {sum}".format(
-                heuristic=heuristic_tuple,
+            msg="heuristic is {h}, but the sum is non-zero: {sum}".format(
+                h=heuristic_tuple,
                 sum=sum(heuristic_tuple)
             )
         )
