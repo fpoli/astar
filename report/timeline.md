@@ -14,3 +14,4 @@ Please update this whenever you do something.
 * 10/11/15 22.30 - 23.30: Improving A*, implementing IDA*, implementing MaxN
 * 11/11/15 13.30 - 15.00: Implementing MaxN
 * 11/11/15 19.00 - 22.30: Implementing utility and heuristics (Federico)
+* 19/11/15 19.00 - 23.00: Implementing MaxnBot (Federico)
