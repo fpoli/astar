@@ -20,10 +20,10 @@ class MaxnBot(BaseBot):
             Action: the chosen action.
         """
 
-
         # TODO: improve maxn interface
 
         turn_limit = status.turn + 4
+
         def successor(partial_status):
             children = []
 
@@ -39,14 +39,14 @@ class MaxnBot(BaseBot):
 
         def payoff(partial_status):
             return heuristic(partial_status.status)
-        
+
         print("Actuall happyness: {0}".format(heuristic(status)))
-        
+
         happyness, actions = maxn(
             PartialStatus(status),
             successor,
             payoff,
-            0, # TODO: start from 1
+            0,  # TODO: start from 1
             4
         )
         # TODO: take the action for our hero, not for 0
