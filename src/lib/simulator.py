@@ -4,7 +4,7 @@ from copy import copy, deepcopy
 from lib.models import Action, Tile, Position, action_to_dir
 
 
-def __kill(status, hero_id, killer_id=None):
+def kill_in_place(status, hero_id, killer_id=None):
     """Recursively kills a hero.
 
     The status given as parameter will be used to store the result.
@@ -24,7 +24,7 @@ def __kill(status, hero_id, killer_id=None):
             continue
 
         if other.pos == hero.spawn:
-            __kill(status, other_id)
+            kill_in_place(status, other_id)
 
     hero.pos = hero.spawn
     hero.mine_count = 0
@@ -39,7 +39,7 @@ def __kill(status, hero_id, killer_id=None):
                 status.heroes[killer_id - 1].mine_count += 1
 
 
-def __simulate_turn(status, action):
+def simulate_turn_in_place(status, action):
     """Simulate a movement given a Status.
 
     Arguments:
@@ -94,7 +94,7 @@ def __simulate_turn(status, action):
 
             # Hero dies trying
             else:
-                __kill(status, hero_id, None)
+                kill_in_place(status, hero_id, None)
 
     # Fight
     for other_id, other in enumerate(status.heroes, start=1):
@@ -109,7 +109,7 @@ def __simulate_turn(status, action):
 
             else:
                 # Hero kills the other
-                __kill(status, other_id, hero_id)
+                kill_in_place(status, other_id, hero_id)
 
     # Mining
     hero.gold += hero.mine_count
@@ -138,7 +138,7 @@ def simulate_turn(original_status, action):
     status.heroes = deepcopy(original_status.heroes)
     status.mines = deepcopy(original_status.mines)
 
-    __simulate_turn(status, action)
+    simulate_turn_in_place(status, action)
 
     return status
 
@@ -162,6 +162,6 @@ def simulate(original_status, actions):
     status.mines = deepcopy(original_status.mines)
 
     for hero_id in range(1, 5):
-        __simulate_turn(status, actions[hero_id - 1])
+        simulate_turn_in_place(status, actions[hero_id - 1])
 
     return status
