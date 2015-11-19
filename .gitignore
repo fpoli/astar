@@ -16,3 +16,7 @@ docs/build/
 
 # Secret files
 bot.key
+
+# Profiling files
+*.profile
+*.calltree

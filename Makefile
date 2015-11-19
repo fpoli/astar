@@ -14,6 +14,13 @@ start:
 	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
 		./src/main.py $(BOT_KEY)
 
+profile:
+	@echo "(*) Start bot..."
+	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
+		python3 -m cProfile -o main.profile ./src/main.py $(BOT_KEY) || true
+	@pyprof2calltree -i main.profile -o main.calltree
+	@echo "Now you can run 'kcachegrind main.calltree'"
+
 linter:
 	@echo "(*) Run linter..."
 	@pep8 --ignore="E221" src/ test/
