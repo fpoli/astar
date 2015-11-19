@@ -40,18 +40,14 @@ class MaxnBot(BaseBot):
         def payoff(partial_status):
             return heuristic(partial_status.status)
 
-        print("Actual happyness: {0}".format(heuristic(status)))
-
         happyness, actions = maxn(
             PartialStatus(status),
             successor,
             payoff,
-            0,  # TODO: start from 1
+            0,
             4
         )
         # TODO: take the action for our hero, not for 0
         action = actions[0]
 
-        print("New    happyness: {0}".format(happyness))
-        print("Action: {0}".format(action))
         return action

@@ -24,4 +24,5 @@ if __name__ == "__main__":
             status = env.get_status()
             print("Status:\n", status, sep="")
             action = bot.think(status)
+            print("Action:", action)
             env.send_action(action)
