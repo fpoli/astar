@@ -4,6 +4,19 @@ from lib.utility import utility
 
 
 def gold_score(status, hero_id, opponent_id):
+    """ Calculate the score of hero against opponent, considering gold only.
+
+    Arguments:
+        status (Status): the game status.
+        hero_id (int): the hero's id.
+        opponent_id (int): the opponent's id.
+
+    Returns:
+        float: the hero's score against opponent:
+          * 1   if hero won
+          * 0.5 in case of draw
+          * 0   if opponent won
+    """
     hero = status.heroes[hero_id - 1]
     opponent = status.heroes[opponent_id - 1]
 
@@ -21,4 +34,10 @@ def gold_score(status, hero_id, opponent_id):
 
 
 def heuristic(status):
+    """ Heuristic that estimates the utility for each hero, considering gold
+    only.
+
+    Returns:
+        (float, float, float, float): the estimated utility for each hero.
+    """
     return utility(status, gold_score)
