@@ -21,3 +21,16 @@ class TestMaxnBotAction(unittest.TestCase):
         action = bot.think(status)
 
         self.assertEqual(action, Action.north)
+
+    def test_attacks_vulnerable_hero(self):
+        """Test that the bot attacks a vulnerable hero"""
+
+        # Build models
+        status_dict = get_status_samples_dict()["attack0"][500]
+        map_obj = Map(status_dict["game"]["board"]["tiles"])
+        status = Status(status_dict["game"], map_obj)
+
+        bot = MaxnBot()
+        action = bot.think(status)
+
+        self.assertEqual(action, Action.east)
