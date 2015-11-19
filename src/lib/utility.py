@@ -77,7 +77,7 @@ def hero_utility(status, hero_id, scoring_function=calculate_score):
     else:
         hero_elo = hero.elo
 
-    for opponent_id in range(4):
+    for opponent_id in range(1, 5):
         if opponent_id == hero_id:
             continue
 
@@ -109,6 +109,6 @@ def utility(status, scoring_function=calculate_score):
         (float, float, float, float): the hero utility value for each hero.
     """
     return tuple([
-        hero_utility(status, i)
-        for i in range(4)
+        hero_utility(status, hero_id)
+        for hero_id in range(1, 5)
     ])

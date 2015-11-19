@@ -4,7 +4,7 @@
 import sys
 from lib.environment import TrainingEnvironment
 from lib.models import Action
-from lib.bots.random import RandomBot
+import lib.bots as bots
 import random
 
 # Ensure that this script is being executed (not imported)
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     else:
         key = sys.argv[1]
         env = TrainingEnvironment(key)
-        bot = RandomBot()
+        bot = bots.MaxnBot()
 
         while True:
             print("View url: ", env.view_url)
