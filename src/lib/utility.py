@@ -109,6 +109,6 @@ def utility(status, scoring_function=calculate_score):
         (float, float, float, float): the hero utility value for each hero.
     """
     return tuple([
-        hero_utility(status, hero_id)
+        hero_utility(status, hero_id, scoring_function)
         for hero_id in range(1, 5)
     ])
