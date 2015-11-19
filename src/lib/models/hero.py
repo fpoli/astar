@@ -9,7 +9,7 @@ class Hero(EqualityMixin):
     """Represents a hero in the game.
 
     Attributes:
-        id (int): the hero's id.
+        id (int): the hero's id (from 0 to 3, extremes included).
         name (string): the bot's name.
         user_id (string): the bot's id (None in training mode).
         elo (int): the bot's ELO (None in training mode).
@@ -29,7 +29,7 @@ class Hero(EqualityMixin):
             hero (dict): the hero data from the server.
         """
         # Constants
-        self.id         = hero["id"]
+        self.id         = hero["id"] - 1
         self.name       = hero["name"]
         self.user_id    = hero.get("userId")
         self.elo        = hero.get("elo")

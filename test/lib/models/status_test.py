@@ -17,10 +17,10 @@ class TestStatusRemainingTurnsOfHero(unittest.TestCase):
         expected = [600, 600, 600, 600]
 
         # Check initial value
-        for hero_id in range(1, 5):
+        for hero_id in range(4):
             self.assertEqual(
                 self.status.remaining_turns_of_hero(hero_id),
-                expected[hero_id - 1],
+                expected[hero_id],
                 msg="Turn {t}, max_turns {m}, hero {h}".format(
                     t=self.status.turn,
                     m=self.status.max_turns,
@@ -30,14 +30,14 @@ class TestStatusRemainingTurnsOfHero(unittest.TestCase):
 
         for turn in range(2400):
             # Similate a game turn
-            expected[self.status.current_hero() - 1] -= 1
+            expected[self.status.current_hero()] -= 1
             self.status.turn += 1
 
             # Check value
-            for hero_id in range(1, 5):
+            for hero_id in range(4):
                 self.assertEqual(
                     self.status.remaining_turns_of_hero(hero_id),
-                    expected[hero_id - 1],
+                    expected[hero_id],
                     msg="Turn {t}, max_turns {m}, hero {h}".format(
                         t=self.status.turn,
                         m=self.status.max_turns,

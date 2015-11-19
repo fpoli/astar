@@ -17,9 +17,9 @@ def kill_in_place(status, hero_id, killer_id=None):
     Results:
         The status given as parameter will be used to store the result.
     """
-    hero = status.heroes[hero_id - 1]
+    hero = status.heroes[hero_id]
 
-    for other_id, other in enumerate(status.heroes, start=1):
+    for other_id, other in enumerate(status.heroes):
         if other_id == hero_id:
             continue
 
@@ -36,7 +36,7 @@ def kill_in_place(status, hero_id, killer_id=None):
                 status.mines[pos].owner = None
             else:
                 status.mines[pos].owner = killer_id
-                status.heroes[killer_id - 1].mine_count += 1
+                status.heroes[killer_id].mine_count += 1
 
 
 def simulate_turn_in_place(status, action):
@@ -50,7 +50,7 @@ def simulate_turn_in_place(status, action):
         The status given as parameter will be used to store the result.
     """
     hero_id = status.current_hero()
-    hero = status.heroes[hero_id - 1]
+    hero = status.heroes[hero_id]
     hero.last_dir = action
 
     # Compute next position
@@ -88,7 +88,7 @@ def simulate_turn_in_place(status, action):
 
                 # remove mine from previous owner
                 if mine.owner is not None:
-                    status.heroes[mine.owner - 1].mine_count -= 1
+                    status.heroes[mine.owner].mine_count -= 1
 
                 status.mines[dst_pos].owner = hero_id
 
@@ -97,7 +97,7 @@ def simulate_turn_in_place(status, action):
                 kill_in_place(status, hero_id, None)
 
     # Fight
-    for other_id, other in enumerate(status.heroes, start=1):
+    for other_id, other in enumerate(status.heroes):
         if other_id == hero_id:
             continue
 
@@ -161,7 +161,7 @@ def simulate(original_status, actions):
     status.heroes = deepcopy(original_status.heroes)
     status.mines = deepcopy(original_status.mines)
 
-    for hero_id in range(1, 5):
-        simulate_turn_in_place(status, actions[hero_id - 1])
+    for action in actions:
+        simulate_turn_in_place(status, action)
 
     return status

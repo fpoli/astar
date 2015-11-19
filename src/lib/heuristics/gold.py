@@ -17,8 +17,8 @@ def gold_score(status, hero_id, opponent_id):
           * 0.5 in case of draw
           * 0   if opponent won
     """
-    hero = status.heroes[hero_id - 1]
-    opponent = status.heroes[opponent_id - 1]
+    hero = status.heroes[hero_id]
+    opponent = status.heroes[opponent_id]
 
     # Calculate the gold at the end of the game
     hero_turns = status.remaining_turns_of_hero(hero_id)

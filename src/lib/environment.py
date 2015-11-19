@@ -38,7 +38,7 @@ class Environment:
             self.view_url = json_dict["viewUrl"]
             self.token = json_dict["token"]
             self.map = Map(json_dict["game"]["board"]["tiles"])
-            self.hero_id = json_dict["hero"]["id"]
+            self.hero_id = json_dict["hero"]["id"] - 1
             self.status = Status(json_dict["game"], self.map)
         else:
             raise Exception(

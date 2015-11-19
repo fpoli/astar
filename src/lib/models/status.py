@@ -47,7 +47,7 @@ class Status(EqualityMixin):
         for pos in self.map.mines:
             i = pos.y * self.map.size + pos.x
             tile = status_dict["board"]["tiles"][i * 2: (i + 1) * 2]
-            owner = None if tile[1] == "-" else int(tile[1])
+            owner = None if tile[1] == "-" else int(tile[1]) - 1
             self.mines[pos] = Mine(pos, owner)
 
         # Create heroes
@@ -95,13 +95,13 @@ class Status(EqualityMixin):
 
     def current_hero(self):
         """Returns the id of the hero that has to move in this turn."""
-        return self.turn % 4 + 1
+        return self.turn % 4
 
     def remaining_turns_of_hero(self, hero_id):
         """Returns the number of remaining turns for a hero."""
         remaining_rounds = (self.max_turns - self.turn - 1) // 4
 
-        if hero_id - 1 >= self.turn % 4:
+        if hero_id >= self.turn % 4:
             return remaining_rounds + 1
         else:
             return remaining_rounds

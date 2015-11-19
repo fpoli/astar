@@ -40,8 +40,8 @@ def calculate_score(status, hero_id, opponent_id):
           * 0.5 in case of draw
           * 0   if opponent won
     """
-    hero = status.heroes[hero_id - 1]
-    opponent = status.heroes[opponent_id - 1]
+    hero = status.heroes[hero_id]
+    opponent = status.heroes[opponent_id]
 
     if hero.gold > opponent.gold:
         return 1
@@ -70,18 +70,18 @@ def hero_utility(status, hero_id, scoring_function=calculate_score):
 
     diff = 0
     default_elo = 1200
-    hero = status.heroes[hero_id - 1]
+    hero = status.heroes[hero_id]
 
     if hero.elo is None:
         hero_elo = default_elo
     else:
         hero_elo = hero.elo
 
-    for opponent_id in range(1, 5):
+    for opponent_id in range(4):
         if opponent_id == hero_id:
             continue
 
-        opponent = status.heroes[opponent_id - 1]
+        opponent = status.heroes[opponent_id]
 
         hero_score = scoring_function(status, hero_id, opponent_id)
 
@@ -110,5 +110,5 @@ def utility(status, scoring_function=calculate_score):
     """
     return tuple([
         hero_utility(status, hero_id, scoring_function)
-        for hero_id in range(1, 5)
+        for hero_id in range(4)
     ])

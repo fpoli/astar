@@ -106,8 +106,8 @@ class TestGoldScoreCodomain(unittest.TestCase):
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
 
-        for hero_id in range(1, 5):
-            for opponent_id in range(1, 5):
+        for hero_id in range(4):
+            for opponent_id in range(4):
                 score = gold_score(status, hero_id, opponent_id)
                 self.assertGreaterEqual(score, 0)
                 self.assertLessEqual(score, 1)
