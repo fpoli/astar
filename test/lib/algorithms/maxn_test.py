@@ -6,7 +6,6 @@ from lib.algorithms.maxn import maxn
 
 class TestMaxnSimpleRun(unittest.TestCase):
     def test_simple(self):
-    """ Test is hardcoded """
         def s(x):
             if x == 0:
                 return [(1, 'a'), (2, 'b'), (3, 'c')]
