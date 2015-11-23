@@ -12,7 +12,7 @@ def one(a=None, b=None):
     return 1
 
 
-def search(start, is_goal, s, h, cost=one, max_depth=1):
+def search(start, is_goal, s, h, cost=one, cutoff=1):
     """ Performs an A* search up to given depth level.
 
     Args:
@@ -21,19 +21,19 @@ def search(start, is_goal, s, h, cost=one, max_depth=1):
         successor (hashable -> [hashable]: returns successors of a node
         heuristic (hashable -> int): estimates a cost to a node
         cost (hashable, hashable -> int): cost to move between nodes
-        max_depth (int): maximum depth for this iteration
+        cutoff (int): maximum value allowed in the queue
 
     Returns:
         [hashable]: sequence of states from start to goal
     """
     path = []
     while not path:
-        path = limited_search(start, is_goal, s, h, cost, max_depth)
-        max_depth = max_depth + 1
+        (path, new_cost) = limited_search(start, is_goal, s, h, cost, cutoff)
+        cutoff = new_cost
     return path
 
 
-def limited_search(start, is_goal, s, h, cost=one, max_depth=1):
+def limited_search(start, is_goal, s, h, cost=one, cutoff=0):
     """ Performs an A* search up to given depth level.
 
     Args:
@@ -42,10 +42,10 @@ def limited_search(start, is_goal, s, h, cost=one, max_depth=1):
         successor (hashable -> [hashable]: returns successors of a node
         heuristic (hashable -> int): estimates a cost to a node
         cost (hashable, hashable -> int): cost to move between nodes
-        max_depth (int): maximum depth for this iteration
+        cutoff (int): maximum value allowed in the queue
 
     Returns:
-        [hashable]: sequence of states from start to goal
+        ([hashable], int): sequence of states and minimum value excluded
     """
     frontier = []
     parents = {}
@@ -56,26 +56,30 @@ def limited_search(start, is_goal, s, h, cost=one, max_depth=1):
     parents[start] = None
     depths[start] = 0
     g[start] = 0
+    min_cost = 999999
 
     while frontier:
         (priority, node) = heapq.heappop(frontier)
 
         if is_goal(node):
-            return backtrack(node, parents)
-
-        if depths[node] > max_depth:
-            continue
+            return (backtrack(node, parents), min_cost)
 
         successors = s(node)
         for next_node in successors:
             new_cost = g[node] + cost(node, next_node)
+
+            if new_cost > cutoff:
+                if new_cost < min_cost:
+                    min_cost = new_cost
+                continue
+
             if next_node not in g or new_cost < g[next_node]:
                 parents[next_node] = node
                 depths[next_node] = depths[node] + 1
                 g[next_node] = new_cost
                 priority = g[next_node] + h(next_node)
                 heapq.heappush(frontier, (priority, next_node))
-    return []
+    return ([], min_cost)
 
 
 def backtrack(node, parents):
