@@ -15,3 +15,4 @@ Please update this whenever you do something.
 * 11/11/15 13.30 - 15.00: Implementing MaxN (Marco)
 * 11/11/15 19.00 - 22.30: Implementing utility and heuristics (Federico)
 * 19/11/15 19.00 - 23.00: Implementing MaxnBot (Federico)
+* 24/11/15 23.30 - 00.30: Regular midnight refactoring (Marco)
