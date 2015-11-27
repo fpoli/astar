@@ -2,6 +2,15 @@
 
 from copy import copy, deepcopy
 from lib.models import Action, Tile, Position, action_to_dir
+import pickle as pickle
+
+
+def fast_deepcopy(x):
+	# Assumes that classes and functions are top-level entities in their
+	# modules.
+	# See https://stackoverflow.com/questions/1410615/copy-deepcopy-vs-pickle
+	# for details.
+	return pickle.loads(pickle.dumps(x, -1))
 
 
 def kill_in_place(status, hero_id, killer_id=None):
@@ -135,8 +144,8 @@ def simulate_turn(original_status, action):
     """
     # Clone the status object
     status = copy(original_status)
-    status.heroes = deepcopy(original_status.heroes)
-    status.mine_owner = copy(original_status.mine_owner)
+    status.heroes = fast_deepcopy(original_status.heroes)
+    status.mines = copy(original_status.mines)
 
     simulate_turn_in_place(status, action)
 
@@ -158,8 +167,8 @@ def simulate(original_status, actions):
 
     # Clone the status object
     status = copy(original_status)
-    status.heroes = deepcopy(original_status.heroes)
-    status.mine_owner = copy(original_status.mine_owner)
+    status.heroes = fast_deepcopy(original_status.heroes)
+    status.mines = copy(original_status.mines)
 
     for action in actions:
         simulate_turn_in_place(status, action)
