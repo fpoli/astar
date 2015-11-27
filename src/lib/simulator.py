@@ -30,12 +30,12 @@ def kill_in_place(status, hero_id, killer_id=None):
     hero.mine_count = 0
     hero.life = 100
 
-    for pos, mine in status.mines.items():
-        if mine.owner == hero_id:
+    for pos, owner in status.mine_owner.items():
+        if owner == hero_id:
             if killer_id is None:
-                status.mines[pos].owner = None
+                status.mine_owner[pos] = None
             else:
-                status.mines[pos].owner = killer_id
+                status.mine_owner[pos] = killer_id
                 status.heroes[killer_id].mine_count += 1
 
 
@@ -76,10 +76,10 @@ def simulate_turn_in_place(status, action):
             hero.life = min(hero.life + 50, 100)
 
     elif tile == Tile.mine:
-        mine = status.mines[dst_pos]
+        owner = status.mine_owner[dst_pos]
 
         # hero is not the mine"s owner
-        if mine.owner != hero_id:
+        if owner != hero_id:
 
             # get mine
             if hero.life > 20:
@@ -87,10 +87,10 @@ def simulate_turn_in_place(status, action):
                 hero.mine_count += 1
 
                 # remove mine from previous owner
-                if mine.owner is not None:
-                    status.heroes[mine.owner].mine_count -= 1
+                if owner is not None:
+                    status.heroes[owner].mine_count -= 1
 
-                status.mines[dst_pos].owner = hero_id
+                status.mine_owner[dst_pos] = hero_id
 
             # Hero dies trying
             else:
@@ -136,7 +136,7 @@ def simulate_turn(original_status, action):
     # Clone the status object
     status = copy(original_status)
     status.heroes = deepcopy(original_status.heroes)
-    status.mines = deepcopy(original_status.mines)
+    status.mine_owner = copy(original_status.mine_owner)
 
     simulate_turn_in_place(status, action)
 
@@ -159,7 +159,7 @@ def simulate(original_status, actions):
     # Clone the status object
     status = copy(original_status)
     status.heroes = deepcopy(original_status.heroes)
-    status.mines = deepcopy(original_status.mines)
+    status.mine_owner = copy(original_status.mine_owner)
 
     for action in actions:
         simulate_turn_in_place(status, action)

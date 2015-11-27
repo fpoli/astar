@@ -8,9 +8,7 @@ class Mine(EqualityMixin):
     """A mine object.
 
     Attributes:
-        pos (Position): the mine position.
-        owner (int): the hero's id that owns this mine (from 0 to 3,
-          extremes included).
+        pos (Position): the mine position
     """
 
     def __init__(self, pos, owner=None):
@@ -22,4 +20,3 @@ class Mine(EqualityMixin):
                 3, extremes included)
         """
         self.pos = pos
-        self.owner = owner

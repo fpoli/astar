@@ -4,6 +4,7 @@ from math import sqrt
 from lib.equality_mixin import EqualityMixin
 from .tile import Tile
 from .tavern import Tavern
+from .mine import Mine
 from .position import Position
 
 
@@ -54,7 +55,7 @@ class Map(EqualityMixin):
 
                 elif raw_tile.startswith("$"):
                     tile = Tile.mine
-                    self.mines.append(Position(x, y))
+                    self.mines.append(Mine(Position(x, y)))
 
                 else:
                     tile = Tile.empty

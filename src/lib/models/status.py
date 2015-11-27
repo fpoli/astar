@@ -21,7 +21,8 @@ class Status(EqualityMixin):
         finished (bool): is the game over?
         map (Map): a map instance.
         heroes ([Hero]): a list of Hero instances.
-        mines ({Position -> Mine}): a dictionary with the Mine instances.
+        mine_owner ({Position -> int | None}): a dictionary with the hero id
+          that owns this mine (None or integer from 0 to 3, extremes included).
     """
 
     def __init__(self, status_dict, map_obj):
@@ -41,14 +42,14 @@ class Status(EqualityMixin):
         # Processed objects
         self.map = map_obj
         self.heroes = []
-        self.mines = {}
+        self.mine_owner = {}
 
         # Parse and create mines
-        for pos in self.map.mines:
-            i = pos.y * self.map.size + pos.x
+        for mine in self.map.mines:
+            i = mine.pos.y * self.map.size + mine.pos.x
             tile = status_dict["board"]["tiles"][i * 2: (i + 1) * 2]
             owner = None if tile[1] == "-" else int(tile[1]) - 1
-            self.mines[pos] = Mine(pos, owner)
+            self.mine_owner[mine.pos] = owner
 
         # Create heroes
         for hero in status_dict["heroes"]:
@@ -70,7 +71,6 @@ class Status(EqualityMixin):
                     h for h in self.heroes
                     if h.spawn == (x, y)
                 ]
-                mine = self.mines.get((x, y))
 
                 if tile == Tile.wall:
                     s += "##"
@@ -79,9 +79,10 @@ class Status(EqualityMixin):
                     s += str(hero[0].id)
                 elif any(spawn):
                     s += ".."
-                elif mine:
+                elif (x, y) in self.mine_owner:
+                    owner = self.mine_owner[(x, y)]
                     s += "$"
-                    s += "-" if mine.owner is None else str(mine.owner)
+                    s += "-" if owner is None else str(owner)
                 elif tile == Tile.tavern:
                     s += "[]"
                 else:
