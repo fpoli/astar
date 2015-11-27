@@ -18,8 +18,9 @@ class TestMaxnBotAction(unittest.TestCase):
         status_dict = get_status_samples_dict()["mine0"][0]
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
+        hero_id = status_dict["hero"]["id"] - 1
 
-        bot = MaxnBot()
+        bot = MaxnBot(hero_id)
         action = bot.think(status)
 
         self.assertEqual(action, Action.north)
@@ -31,8 +32,9 @@ class TestMaxnBotAction(unittest.TestCase):
         status_dict = get_status_samples_dict()["attack0"][500]
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
+        hero_id = status_dict["hero"]["id"] - 1
 
-        bot = MaxnBot()
+        bot = MaxnBot(hero_id)
         action = bot.think(status)
 
         self.assertEqual(action, Action.east)
@@ -48,7 +50,7 @@ class TestMaxnBotAction(unittest.TestCase):
             status = Status(status_dict["game"], map_obj)
             samples_status.append(status)
 
-        bot = MaxnBot()
+        bot = MaxnBot(0)
         t = Timer(lambda: bot.think(choice(samples_status)))
 
         # We are interested in the maximum execution time, not in the average!

@@ -17,11 +17,9 @@ if __name__ == "__main__":
     else:
         key = sys.argv[1]
         env = TrainingEnvironment(key)
-        bot = bots.MaxnBot()
+        bot = bots.MaxnBot(env.hero_id)
 
         while True:
-            print("View url: ", env.view_url)
-            status = env.get_status()
             print("Status:\n", status, sep="")
             action = bot.think(status)
             print("Action:", action)

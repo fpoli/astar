@@ -18,6 +18,7 @@ class Environment:
         self.map = None
         self.hero = None
         self.status = None
+        self.hero_id = None
 
         self.__create_game()
 

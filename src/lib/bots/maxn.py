@@ -47,7 +47,7 @@ class MaxnBot(BaseBot):
             0,
             4
         )
-        # TODO: take the action for our hero, not for 0
-        action = actions[0]
+
+        action = actions[self.hero_id]
 
         return action
