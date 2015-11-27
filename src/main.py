@@ -20,6 +20,8 @@ if __name__ == "__main__":
         bot = bots.MaxnBot(env.hero_id)
 
         while True:
+            print("View url: ", env.view_url)
+            status = env.get_status()
             print("Status:\n", status, sep="")
             action = bot.think(status)
             print("Action:", action)
