@@ -1,4 +1,5 @@
-CURR_DIR := $(shell pwd)
+# The "=" definition is executed at startup, the ":=" is executed ad runtime
+CURR_DIR = $(shell pwd)
 BOT_KEY := $(shell cat bot.key)
 
 .PHONY: default report start linter test docs clean
@@ -15,11 +16,16 @@ start:
 		./src/main.py $(BOT_KEY)
 
 profile:
-	@echo "(*) Start bot..."
+	@echo "(*) Profiling..."
 	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
 		python3 -m cProfile -o main.profile ./src/main.py $(BOT_KEY) || true
 	@pyprof2calltree -i main.profile -o main.calltree
 	@echo "Now you can run: kcachegrind main.calltree"
+
+benchmark:
+       @echo "(*) Benchmark..."
+       @cd test && PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
+            ./benchmark.py $(BOT_KEY)
 
 linter:
 	@echo "(*) Run linter..."
