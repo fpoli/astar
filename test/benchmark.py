@@ -32,13 +32,12 @@ if __name__ == "__main__":
     #
     print("Measuring client simulation speed...")
     t = Timer(
-        lambda:
-            simulate(
-                # a random state
-                random.choice(samples_status),
-                # 4 random actions
-                [random.choice(list(Action)) for i in range(4)]
-            )
+        lambda: simulate(
+            # a random state
+            random.choice(samples_status),
+            # 4 random actions
+            [random.choice(list(Action)) for i in range(4)]
+        )
     )
     measurements = t.repeat(repeat=5000, number=1)
     print(report(measurements))
@@ -49,8 +48,7 @@ if __name__ == "__main__":
     print("Measuring MaxnBot speed...")
     bot = bots.MaxnBot(0)
     t = Timer(
-        lambda:
-            bot.think(random.choice(samples_status))  # a random state
+        lambda: bot.think(random.choice(samples_status))  # a random state
     )
     measurements = t.repeat(repeat=30, number=1)
     print(report(measurements))
