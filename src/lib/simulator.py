@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from copy import copy, deepcopy
 from lib.models import Action, Tile, Position, action_to_dir
 
 
@@ -133,10 +132,7 @@ def simulate_turn(original_status, action):
     Returns:
         Status: the next status (a new object).
     """
-    # Clone the status object
-    status = copy(original_status)
-    status.heroes = deepcopy(original_status.heroes)
-    status.mine_owner = copy(original_status.mine_owner)
+    status = original_status.clone()
 
     simulate_turn_in_place(status, action)
 
@@ -156,10 +152,7 @@ def simulate(original_status, actions):
     # Check that the next action is executed by hero 1
     assert(original_status.turn % 4 == 0)
 
-    # Clone the status object
-    status = copy(original_status)
-    status.heroes = deepcopy(original_status.heroes)
-    status.mine_owner = copy(original_status.mine_owner)
+    status = original_status.clone()
 
     for action in actions:
         simulate_turn_in_place(status, action)

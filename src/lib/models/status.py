@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from copy import copy
 from .hero import Hero
 from .map import Map
 from .tavern import Tavern
@@ -54,6 +55,18 @@ class Status(EqualityMixin):
         # Create heroes
         for hero in status_dict["heroes"]:
             self.heroes.append(Hero(hero))
+
+    def clone(self):
+        """Returns a new copy of the current state, without duplicating
+        immutable objects.
+
+        Returns:
+            Status: the cloned status
+        """
+        new_status = copy(self)
+        new_status.heroes = [copy(h) for h in self.heroes]
+        new_status.mine_owner = copy(self.mine_owner)
+        return new_status
 
     def __str__(self):
         """Pretty map."""
