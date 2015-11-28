@@ -10,6 +10,7 @@ from lib.models import Action, Map, Status
 from lib.simulator import simulate
 import lib.bots as bots
 
+
 def report(measurements):
     return "min: {min:.3}, max: {max:.3}".format(
         min=min(measurements),
@@ -30,11 +31,14 @@ if __name__ == "__main__":
     # 1. Measure simulation speed
     #
     print("Measuring client simulation speed...")
-    t = Timer(lambda:
-        simulate(
-            random.choice(samples_status),  # a random state
-            [random.choice(list(Action)) for i in range(4)]  # 4 random actions
-        )
+    t = Timer(
+        lambda:
+            simulate(
+                # a random state
+                random.choice(samples_status),
+                # 4 random actions
+                [random.choice(list(Action)) for i in range(4)]
+            )
     )
     measurements = t.repeat(repeat=5000, number=1)
     print(report(measurements))
@@ -44,8 +48,9 @@ if __name__ == "__main__":
     #
     print("Measuring MaxnBot speed...")
     bot = bots.MaxnBot(0)
-    t = Timer(lambda:
-        bot.think(random.choice(samples_status)) # a random state
+    t = Timer(
+        lambda:
+            bot.think(random.choice(samples_status))  # a random state
     )
     measurements = t.repeat(repeat=30, number=1)
     print(report(measurements))

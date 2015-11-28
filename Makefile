@@ -23,9 +23,9 @@ profile:
 	@echo "Now you can run: kcachegrind main.calltree"
 
 benchmark:
-       @echo "(*) Benchmark..."
-       @cd test && PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-            ./benchmark.py $(BOT_KEY)
+	@echo "(*) Benchmark..."
+	@cd test && PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
+		./benchmark.py $(BOT_KEY)
 
 linter:
 	@echo "(*) Run linter..."
