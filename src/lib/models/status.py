@@ -57,7 +57,8 @@ class Status(EqualityMixin):
 
     def __str__(self):
         """Pretty map."""
-        s = " "
+        s = "Turn {0}/{1}\n".format(self.turn, self.max_turns)
+        s += " "
         s += "-" * 2 * self.map.size + "\n"
         for y in range(self.map.size):
             s += "|"
