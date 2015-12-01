@@ -12,20 +12,17 @@ report:
 
 start:
 	@echo "(*) Start bot..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-		./src/main.py $(BOT_KEY)
+	@python3 script/main.py $(BOT_KEY)
 
 profile:
 	@echo "(*) Profiling..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-		python3 -m cProfile -o main.profile ./src/main.py $(BOT_KEY) || true
+	@python3 -m cProfile -o main.profile script/main.py $(BOT_KEY) || true
 	@pyprof2calltree -i main.profile -o main.calltree
 	@echo "Now you can run: kcachegrind main.calltree"
 
 benchmark:
 	@echo "(*) Benchmark..."
-	@cd test && PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-		./benchmark.py $(BOT_KEY)
+	@python3 script/benchmark.py $(BOT_KEY)
 
 linter:
 	@echo "(*) Run linter..."

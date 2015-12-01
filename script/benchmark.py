@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
+import os
 import sys
 import random
 from timeit import Timer
+
+# Add source directories to path
+sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../test"))
+
 from status_samples import get_status_samples
 from lib.environment import TrainingEnvironment
 from lib.models import Action, Map, Status
 from lib.simulator import simulate
 import lib.bots as bots
-
 
 def report(measurements):
     return "min: {min:.3}, max: {max:.3}".format(
