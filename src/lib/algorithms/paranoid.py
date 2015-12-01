@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 
-def paranoid(root, succ, max_depth, paranoid_player, current_player, num_players):
+def paranoid(root, succ, payoff, max_depth, paranoid_player, current_player,
+             num_players):
     """ Performs the Paranoid search.
 
     Implements the Paranoid search algorithm by Sturtevant and Korf
@@ -15,6 +16,7 @@ def paranoid(root, succ, max_depth, paranoid_player, current_player, num_players
         root (Status): Root node of the search
         succ (Status -> [(Status, Action)]): returns successors of a status
         payoff (Status -> (float*)): returns a tuple of payoffs
+        max_depth (int): the maximum depth allowed during the search
         paranoid_player (int): the paranoid player
         current_player (int): player that makes the decision
         num_players (int): number of players
@@ -34,6 +36,7 @@ def paranoid(root, succ, max_depth, paranoid_player, current_player, num_players
         status, actions = paranoid(
             next_node,
             succ,
+            payoff,
             max_depth - 1,
             paranoid_player,
             next_player,
@@ -43,7 +46,7 @@ def paranoid(root, succ, max_depth, paranoid_player, current_player, num_players
 
     # Choose the best action
     if paranoid_player == current_player:
-        return max(choices, key=lambda item:item[0])
+        return max(choices, key=lambda item: item[0][paranoid_player])
     else:
         # Everyone is against the paranoid_player
-        return min(choices, key=lambda item:item[0])
+        return min(choices, key=lambda item: item[0][paranoid_player])
