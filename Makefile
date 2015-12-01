@@ -1,6 +1,7 @@
-# The "=" definition is executed at startup, the ":=" is executed ad runtime
-CURR_DIR = $(shell pwd)
-BOT_KEY := $(shell cat bot.key)
+# The ":=" definitions are executed once at startup
+# The "=" definitions are executed whenever they are used
+CURR_DIR := $(shell pwd)
+BOT_KEY = $(shell cat bot.key)
 
 .PHONY: default report start linter test docs clean
 
