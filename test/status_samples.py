@@ -13,8 +13,10 @@ def get_status_samples_dict():
     """
     status_samples = {}
 
+    directory = os.path.join(os.path.dirname(__file__), "status_samples")
+
     # Load sample status json files
-    for basepath, _, files in os.walk("status_samples"):
+    for basepath, _, files in os.walk(directory):
         for file in files:
             if file.endswith(".json"):
                 with open(basepath + "/" + file, "r") as infile:

@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
+import os
 import sys
+import random
+
+# Add source directory to path
+sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
+
 from lib.environment import TrainingEnvironment
 from lib.models import Action
 import lib.bots as bots
-import random
 
 # Ensure that this script is being executed (not imported)
 if __name__ == "__main__":
