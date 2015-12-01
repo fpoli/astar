@@ -1,5 +1,7 @@
+# The ":=" definitions are executed once at startup
+# The "=" definitions are executed whenever they are used
 CURR_DIR := $(shell pwd)
-BOT_KEY := $(shell cat bot.key)
+BOT_KEY = $(shell cat bot.key)
 
 .PHONY: default report start linter test docs clean
 
@@ -11,15 +13,17 @@ report:
 
 start:
 	@echo "(*) Start bot..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-		./src/main.py $(BOT_KEY)
+	@python3 script/main.py $(BOT_KEY)
 
 profile:
-	@echo "(*) Start bot..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/" \
-		python3 -m cProfile -o main.profile ./src/main.py $(BOT_KEY) || true
+	@echo "(*) Profiling..."
+	@python3 -m cProfile -o main.profile script/main.py $(BOT_KEY) || true
 	@pyprof2calltree -i main.profile -o main.calltree
 	@echo "Now you can run: kcachegrind main.calltree"
+
+benchmark:
+	@echo "(*) Benchmark..."
+	@python3 script/benchmark.py $(BOT_KEY)
 
 linter:
 	@echo "(*) Run linter..."

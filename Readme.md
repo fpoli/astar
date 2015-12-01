@@ -41,6 +41,20 @@ Per eseguire linter e test:
 	make test
 
 
+## Alcune misurazioni
+
+Per eseguire una partita con il profiling attivo:
+
+       make profile
+
+Per analizzare i risultati (il file `main.calltree`) è molto comodo usare
+`kcachegrind` (con il comando `kcachegrind main.calltree`).
+
+Per misura la velocità del server, del simulatore o di certi bot:
+
+       make benchmark
+
+
 ## Dipendenze
 
 Per installare le dipendenze su `Ubuntu 14.04`:
