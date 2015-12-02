@@ -15,7 +15,7 @@ def paranoid(root, succ, payoff, max_depth, paranoid_player, current_player,
     Args:
         root (Status): Root node of the search
         succ (Status -> [(Status, Action)]): returns successors of a status
-        payoff (Status -> (float*)): returns a tuple of payoffs
+        payoff (Status -> float): returns the payoff for paranoid_player only
         max_depth (int): the maximum depth allowed during the search
         paranoid_player (int): the paranoid player
         current_player (int): player that makes the decision
@@ -46,7 +46,7 @@ def paranoid(root, succ, payoff, max_depth, paranoid_player, current_player,
 
     # Choose the best action
     if paranoid_player == current_player:
-        return max(choices, key=lambda item: item[0][paranoid_player])
+        return max(choices, key=lambda item: item[0])
     else:
         # Everyone is against the paranoid_player
-        return min(choices, key=lambda item: item[0][paranoid_player])
+        return min(choices, key=lambda item: item[0])

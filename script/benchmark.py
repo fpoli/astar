@@ -59,6 +59,17 @@ if __name__ == "__main__":
     print(report(measurements))
 
     #
+    # 2. Measure ParanoidBot speed
+    #
+    print("Measuring ParanoidBot speed...")
+    bot = bots.ParanoidBot(0)
+    t = Timer(
+        lambda: bot.think(random.choice(samples_status))  # a random state
+    )
+    measurements = t.repeat(repeat=30, number=1)
+    print(report(measurements))
+
+    #
     # 3. Measure server response time
     #
     print("Measuring server response time...")

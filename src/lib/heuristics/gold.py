@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from lib.utility import utility
+from lib.utility import hero_utility, utility
 
 
 def gold_score(status, hero_id, opponent_id):
@@ -33,9 +33,26 @@ def gold_score(status, hero_id, opponent_id):
     return (gold_diff / (1 + abs(gold_diff)) + 1) / 2
 
 
+def hero_heuristic(status, hero_id):
+    """ Heuristic that estimates the utility for a hero, considering gold
+    only.
+
+    Arguments:
+        status (Status): the game status.
+        hero_id (int): the hero's id.
+
+    Returns:
+        float: the estimated utility for the hero.
+    """
+    return hero_utility(status, hero_id, gold_score)
+
+
 def heuristic(status):
     """ Heuristic that estimates the utility for each hero, considering gold
     only.
+
+    Arguments:
+        status (Status): the game status.
 
     Returns:
         (float, float, float, float): the estimated utility for each hero.

@@ -2,15 +2,15 @@
 
 from random import shuffle
 from .base import BaseBot
-from lib.algorithms.maxn import maxn
-from lib.heuristics.gold import heuristic
+from lib.algorithms.paranoid import paranoid
+from lib.heuristics.gold import hero_heuristic
 from lib.models.action import Action
 from lib.partial_status import PartialStatus
 
 
-class MaxnBot(BaseBot):
+class ParanoidBot(BaseBot):
     def think(self, status):
-        """Chooses an action, using maxn.
+        """Chooses an action, using paranoid.
 
         Arguments:
             status (Status): the game status.
@@ -19,28 +19,24 @@ class MaxnBot(BaseBot):
             Action: the chosen action.
         """
 
-        turn_limit = status.turn + 4
-
         def successor(partial_status):
-            children = []
-
-            if partial_status.status.turn >= turn_limit:
-                return children
-
             actions = list(Action)
             shuffle(actions)
+            children = []
             for action in actions:
                 next_status = partial_status.evolve(action)
                 children.append((next_status, action))
             return children
 
         def payoff(partial_status):
-            return heuristic(partial_status.status)
+            return hero_heuristic(partial_status.status, self.hero_id)
 
-        happyness, actions = maxn(
+        happyness, actions = paranoid(
             PartialStatus(status),
             successor,
             payoff,
+            4,
+            self.hero_id,
             0,
             4
         )
