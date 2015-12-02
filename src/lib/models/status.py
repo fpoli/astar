@@ -56,18 +56,6 @@ class Status(EqualityMixin):
         for hero in status_dict["heroes"]:
             self.heroes.append(Hero(hero))
 
-    def clone(self):
-        """Returns a new copy of the current state, without duplicating
-        immutable objects.
-
-        Returns:
-            Status: the cloned status
-        """
-        new_status = copy(self)
-        new_status.heroes = [copy(h) for h in self.heroes]
-        new_status.mine_owner = copy(self.mine_owner)
-        return new_status
-
     def __str__(self):
         """Pretty map."""
         s = "Turn {0}/{1}\n".format(self.turn, self.max_turns)
@@ -120,3 +108,27 @@ class Status(EqualityMixin):
             return remaining_rounds + 1
         else:
             return remaining_rounds
+
+    def clone(self):
+        """Returns a new copy of the current state, duplicating only mutable
+        objects.
+
+        Returns:
+            Status: the cloned status
+        """
+        new_status = copy(self)
+        new_status.heroes = [copy(h) for h in self.heroes]
+        new_status.mine_owner = self.mine_owner.copy()
+        return new_status
+
+    def __copy__(self):
+        """ Returns a quick shallow copy.
+
+        This gives a ~15%% speedup (benchmark on MaxnBot and ParanoidBot).
+
+        Returns:
+            Status: a status shallow copy.
+        """
+        status = Status.__new__(Status)
+        status.__dict__.update(self.__dict__)
+        return status

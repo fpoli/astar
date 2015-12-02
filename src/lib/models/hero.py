@@ -59,3 +59,15 @@ class Hero(EqualityMixin):
             gold=self.gold,
             mines=self.mine_count
         )
+
+    def __copy__(self):
+        """ Returns a quick shallow copy.
+
+        This gives a ~25%% speedup (benchmark on MaxnBot and ParanoidBot).
+
+        Returns:
+            Hero: a hero shallow copy.
+        """
+        hero = Hero.__new__(Hero)
+        hero.__dict__.update(self.__dict__)
+        return hero

@@ -55,9 +55,11 @@ else:
 bot = bot_class(env.hero_id)
 
 while not env.status.finished:
-    print("View url:", env.view_url)
+    print("(*) View url:", env.view_url)
     status = env.get_status()
-    print("Status:\n", status, sep="")
+    print("(*) Status:\n", status, sep="")
     action = bot.think(status)
-    print("Action:", action)
+    print("(*) Action:", action)
     env.send_action(action)
+
+print("(*) Game over.")
