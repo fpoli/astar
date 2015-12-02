@@ -19,12 +19,14 @@ def maxn(root, s, payoff, player, players):
         (status, [action]): Best status for given player and sequence of
         actions to reach it
     """
-    if not s(root):
+    succ_nodes = s(root)
+
+    if len(succ_nodes) == 0:
         return (payoff(root), [])
 
     next_player = (player + 1) % players
     children = []
-    for (successor, action) in s(root):
+    for (successor, action) in succ_nodes:
         (status, actions) = maxn(successor, s, payoff, next_player, players)
         children.append((status, [action] + actions))
     return best(children, player)

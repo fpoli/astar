@@ -15,6 +15,8 @@ class TestMaxnSimpleRun(unittest.TestCase):
                 return [(7, 'a'), (8, 'b'), (9, 'd')]
             elif x == 3:
                 return [(10, 'a'), (11, 'b'), (12, 'd')]
+            else:
+                return []
 
         def payoff(x):
             if x == 4:

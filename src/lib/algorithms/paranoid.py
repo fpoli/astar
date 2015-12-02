@@ -25,9 +25,13 @@ def paranoid(root, succ, payoff, max_depth, paranoid_player, current_player,
         (status, [action]): Best payoff for given player and sequence of
           actions to reach it
     """
+
+    if max_depth <= 0:
+        return (payoff(root), [])
+
     children_nodes = succ(root)
 
-    if len(children_nodes) == 0 or max_depth <= 0:
+    if len(children_nodes) == 0:
         return (payoff(root), [])
 
     next_player = (current_player + 1) % num_players
