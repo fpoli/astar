@@ -17,10 +17,16 @@ from lib.simulator import simulate
 import lib.bots as bots
 
 def report(measurements):
-    return "min: {min:.3}, max: {max:.3}".format(
+    return "    min: {min:.3}, max: {max:.3}".format(
         min=min(measurements),
         max=max(measurements)
     )
+
+bots = [
+    bots.RandomBot,
+    bots.MaxnBot,
+    bots.ParanoidBot
+]
 
 # Ensure that this script is being executed (not imported)
 if __name__ == "__main__":
@@ -35,7 +41,7 @@ if __name__ == "__main__":
     #
     # 1. Measure simulation speed
     #
-    print("Measuring client simulation speed...")
+    print("(*) Client simulation speed")
     t = Timer(
         lambda: simulate(
             # a random state
@@ -48,31 +54,21 @@ if __name__ == "__main__":
     print(report(measurements))
 
     #
-    # 2. Measure MaxnBot speed
+    # 2. Measure Bot speed
     #
-    print("Measuring MaxnBot speed...")
-    bot = bots.MaxnBot(0)
-    t = Timer(
-        lambda: bot.think(random.choice(samples_status))  # a random state
-    )
-    measurements = t.repeat(repeat=30, number=1)
-    print(report(measurements))
+    for bot_class in bots:
+        print("(*) {0} speed".format(bot_class.__name__))
+        bot = bot_class(0)
+        t = Timer(
+            lambda: bot.think(random.choice(samples_status))  # a random state
+        )
+        measurements = t.repeat(repeat=30, number=1)
+        print(report(measurements))
 
     #
-    # 2. Measure ParanoidBot speed
+    # 2. Measure server response time
     #
-    print("Measuring ParanoidBot speed...")
-    bot = bots.ParanoidBot(0)
-    t = Timer(
-        lambda: bot.think(random.choice(samples_status))  # a random state
-    )
-    measurements = t.repeat(repeat=30, number=1)
-    print(report(measurements))
-
-    #
-    # 3. Measure server response time
-    #
-    print("Measuring server response time...")
+    print("(*) Server response time")
     if len(sys.argv) < 2:
         print("No bot key in arguments, skipping benchmark.")
     else:
