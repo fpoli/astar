@@ -15,11 +15,12 @@ report:
 
 start:
 	@echo "(*) Start bot..."
-	@python3 script/main.py $(BOT_KEY) $(BOT)
+	@python3 script/main.py --key "$(BOT_KEY)" --bot "$(BOT)"
 
 profile:
 	@echo "(*) Profiling..."
-	@python3 -m cProfile -o main.profile script/main.py $(BOT_KEY) $(BOT) || true
+	@python3 -m cProfile -o main.profile \
+		script/main.py --key "$(BOT_KEY)" --bot "$(BOT)" || true
 	@pyprof2calltree -i main.profile -o main.calltree
 	@echo "Now you can run: kcachegrind main.calltree"
 
