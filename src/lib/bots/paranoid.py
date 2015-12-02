@@ -5,7 +5,7 @@ from .base import BaseBot
 from lib.algorithms.paranoid import paranoid
 from lib.heuristics.gold import hero_heuristic
 from lib.models.action import Action
-from lib.partial_status import PartialStatus
+from lib.simulator import simulate
 
 
 class ParanoidBot(BaseBot):
@@ -19,20 +19,20 @@ class ParanoidBot(BaseBot):
             Action: the chosen action.
         """
 
-        def successor(partial_status):
+        def successor(status):
             actions = list(Action)
             shuffle(actions)
             children = []
             for action in actions:
-                next_status = partial_status.evolve(action)
+                next_status = simulate(status, action)
                 children.append((next_status, action))
             return children
 
-        def payoff(partial_status):
-            return hero_heuristic(partial_status.status, self.hero_id)
+        def payoff(status):
+            return hero_heuristic(status, self.hero_id)
 
         happyness, actions = paranoid(
-            PartialStatus(status),
+            status,
             successor,
             payoff,
             4,

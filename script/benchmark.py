@@ -46,8 +46,8 @@ if __name__ == "__main__":
         lambda: simulate(
             # a random state
             random.choice(samples_status),
-            # 4 random actions
-            [random.choice(list(Action)) for i in range(4)]
+            # a random action
+            random.choice(list(Action))
         )
     )
     measurements = t.repeat(repeat=5000, number=1)

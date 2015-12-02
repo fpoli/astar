@@ -4,7 +4,7 @@ import unittest
 from test import generate_tests
 from status_samples import get_status_samples, get_status_samples_pairs
 from lib.models import Map, Status, Action
-from lib.simulator import simulate
+from lib.simulator import simulate, simulate_actions
 
 
 @generate_tests
@@ -16,7 +16,7 @@ class TestSimulateGivesDifferentObjects(unittest.TestCase):
         # Build models
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
-        next_status = simulate(status, [Action.north] * 4)
+        next_status = simulate(status, Action.north)
 
         self.assertNotEqual(id(status), id(next_status))
 
@@ -36,13 +36,17 @@ class TestSimulateComparingStatus(unittest.TestCase):
         status_after = Status(dict_after["game"], map_obj)
 
         # Get actions
-        actions = [
+        actions_by_hero = [
             status_after.heroes[i].last_dir
             for i in range(4)
         ]
+        first_hero = status_before.current_hero()
+
+        # Shift actions such that first_hero is the first to move
+        actions = actions_by_hero[first_hero:] + actions_by_hero[:first_hero]
 
         # Run simulations
-        simulated = simulate(status_before, actions)
+        simulated = simulate_actions(status_before, actions)
 
         # Compare
         self.assertEqual(

@@ -38,7 +38,7 @@ def kill_in_place(status, hero_id, killer_id=None):
                 status.heroes[killer_id].mine_count += 1
 
 
-def simulate_turn_in_place(status, action):
+def simulate_in_place(status, action):
     """Simulate a movement given a Status.
 
     Arguments:
@@ -122,7 +122,7 @@ def simulate_turn_in_place(status, action):
     return status
 
 
-def simulate_turn(original_status, action):
+def simulate(original_status, action):
     """Simulate a movement given a Status.
 
     Arguments:
@@ -134,27 +134,24 @@ def simulate_turn(original_status, action):
     """
     status = original_status.clone()
 
-    simulate_turn_in_place(status, action)
+    simulate_in_place(status, action)
 
     return status
 
 
-def simulate(original_status, actions):
-    """Simulate a round (4 hero actions).
+def simulate_actions(original_status, actions):
+    """Simulate a list of actions.
 
     Arguments:
         original_status (Status): the game status. This will not be modified.
-        actions (tuple of 4 Actions): the actions, ordered by hero"s id.
+        actions (list of Action): the actions.
 
     Returns:
         Status: the next status (a new object).
     """
-    # Check that the next action is executed by hero 1
-    assert(original_status.turn % 4 == 0)
-
     status = original_status.clone()
 
     for action in actions:
-        simulate_turn_in_place(status, action)
+        simulate_in_place(status, action)
 
     return status
