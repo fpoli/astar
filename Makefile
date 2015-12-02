@@ -30,7 +30,7 @@ benchmark:
 
 linter:
 	@echo "(*) Run linter..."
-	@pep8 --ignore="E221" src/ test/
+	@pep8 --ignore="E221" src/ test/ script/
 
 test:
 	@echo "(*) Run tests..."
