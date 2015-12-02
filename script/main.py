@@ -4,30 +4,60 @@
 import os
 import sys
 import random
+import argparse
 
 # Add source directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
 
-from lib.environment import TrainingEnvironment
+from lib.environment import TrainingEnvironment, ArenaEnvironment
 from lib.models import Action
 import lib.bots as bots
 
-# Ensure that this script is being executed (not imported)
-if __name__ == "__main__":
+# Define the command line arguments
+parser = argparse.ArgumentParser(
+    description="Run a bot."
+)
+parser.add_argument(
+    "-k", "--key",
+    required=True,
+    help="the bot key used to connect to the server"
+)
+parser.add_argument(
+    "-b", "--bot",
+    default="MaxnBot",
+    help="the bot to use in the game",
+)
+parser.add_argument(
+    "-m", "--mode",
+    default="training",
+    choices=["training", "arena"],
+    help="the mode to use in the game",
+)
 
-    if len(sys.argv) < 2:
-        print("Usage: {0} <key>".format(sys.argv[0]))
-        exit(0)
+#
+# Main
+#
+args = parser.parse_args()
 
-    else:
-        key = sys.argv[1]
-        env = TrainingEnvironment(key)
-        bot = bots.ParanoidBot(env.hero_id)
+# We don't want to discover that the bot class does not exist when the game
+# already started.
+bot_class = getattr(bots, args.bot)
 
-        while True:
-            print("View url:", env.view_url)
-            status = env.get_status()
-            print("Status:\n", status, sep="")
-            action = bot.think(status)
-            print("Action:", action)
-            env.send_action(action)
+print("(*) Game mode: {0}".format(args.mode))
+print("(*) Bot: {0}".format(args.bot))
+print("(*) Start!")
+
+if args.mode == "arena":
+    env = ArenaEnvironment(args.key)
+else:
+    env = TrainingEnvironment(args.key)
+
+bot = bot_class(env.hero_id)
+
+while not env.status.finished:
+    print("View url:", env.view_url)
+    status = env.get_status()
+    print("Status:\n", status, sep="")
+    action = bot.think(status)
+    print("Action:", action)
+    env.send_action(action)

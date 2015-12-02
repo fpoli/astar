@@ -3,6 +3,8 @@
 CURR_DIR := $(shell pwd)
 BOT_KEY = $(shell cat bot.key)
 
+BOT = "MaxnBot"
+
 .PHONY: default report start linter test docs clean
 
 default: start
@@ -13,11 +15,11 @@ report:
 
 start:
 	@echo "(*) Start bot..."
-	@python3 script/main.py $(BOT_KEY)
+	@python3 script/main.py $(BOT_KEY) $(BOT)
 
 profile:
 	@echo "(*) Profiling..."
-	@python3 -m cProfile -o main.profile script/main.py $(BOT_KEY) || true
+	@python3 -m cProfile -o main.profile script/main.py $(BOT_KEY) $(BOT) || true
 	@pyprof2calltree -i main.profile -o main.calltree
 	@echo "Now you can run: kcachegrind main.calltree"
 

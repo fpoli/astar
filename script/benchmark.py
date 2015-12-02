@@ -68,10 +68,11 @@ if __name__ == "__main__":
     #
     # 2. Measure server response time
     #
-    print("(*) Server response time")
     if len(sys.argv) < 2:
-        print("No bot key in arguments, skipping benchmark.")
+        print("/!\ No bot key in arguments, "
+              "skipping server response time benchmark.")
     else:
+        print("(*) Server response time")
         bot_key = sys.argv[1]
         env = TrainingEnvironment(bot_key)
         t = Timer(lambda: env.send_action(Action.stay))
