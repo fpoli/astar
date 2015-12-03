@@ -56,7 +56,7 @@ def simulate_in_place(status, action):
     direction = action_to_dir(action)
     dst_pos = hero.pos + direction
 
-    # Checks if there is an anemy
+    # Check if there is an enemy
     enemy = None
     for other in status.heroes:
         if other.pos == dst_pos:
@@ -77,7 +77,7 @@ def simulate_in_place(status, action):
     elif tile == Tile.mine:
         owner = status.mine_owner[dst_pos]
 
-        # hero is not the mine"s owner
+        # hero is not the mine's owner
         if owner != hero_id:
 
             # get mine
