@@ -16,9 +16,12 @@ class TestSimulateGivesDifferentObjects(unittest.TestCase):
         # Build models
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
+
+        original_status = status.clone()
         next_status = simulate(status, Action.north)
 
-        self.assertNotEqual(id(status), id(next_status))
+        if original_status != next_status:
+            self.assertNotEqual(id(status), id(next_status))
 
     tests = get_status_samples()
 
@@ -71,3 +74,23 @@ class TestSimulateComparingStatus(unittest.TestCase):
         )
 
     tests = get_status_samples_pairs()
+
+
+@generate_tests
+class TestSimulateGameOver(unittest.TestCase):
+
+    def perform_test(self, status_dict):
+        """Test that simulate returns a new object"""
+
+        # Build models
+        map_obj = Map(status_dict["game"]["board"]["tiles"])
+        status = Status(status_dict["game"], map_obj)
+
+        # Simulate the last turn
+        status.turn = status.max_turns
+
+        next_status = simulate(status, Action.north)
+
+        self.assertEqual(status, next_status)
+
+    tests = get_status_samples()

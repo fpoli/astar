@@ -48,6 +48,10 @@ def simulate_in_place(status, action):
     Results:
         The status given as parameter will be used to store the result.
     """
+
+    if status.turn >= status.max_turns:
+        return status
+
     hero_id = status.current_hero()
     hero = status.heroes[hero_id]
     hero.last_dir = action
