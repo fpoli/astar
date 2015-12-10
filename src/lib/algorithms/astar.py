@@ -39,7 +39,6 @@ def search(start, is_goal, s, h, cost=one):
         e = e + 1
 
         if is_goal(node):
-            print(e)
             return backtrack(node, parents)
 
         successors = s(node)
@@ -50,6 +49,8 @@ def search(start, is_goal, s, h, cost=one):
                 g[next_node] = new_cost
                 priority = g[next_node] + h(next_node)
                 heapq.heappush(frontier, (priority, next_node))
+    # The goal can't be reached
+    return []
 
 
 def backtrack(node, parents):

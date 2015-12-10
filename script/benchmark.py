@@ -51,7 +51,8 @@ print(report(measurements))
 bots = [
     bots.RandomBot,
     bots.MaxnBot,
-    bots.ParanoidBot
+    bots.ParanoidBot,
+    bots.SimpleGoalBot
 ]
 for bot_class in bots:
     print("(*) {0} speed".format(bot_class.__name__))

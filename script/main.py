@@ -13,6 +13,7 @@ from lib.environment import TrainingEnvironment, ArenaEnvironment
 from lib.models import Action
 import lib.bots as bots
 from lib.logging import Logger
+from lib.utility import hero_utility
 
 # Define the command line arguments
 parser = argparse.ArgumentParser(
@@ -46,9 +47,10 @@ bot_class = getattr(bots, args.bot)
 
 print("(*) Game mode: {0}".format(args.mode))
 print("(*) Bot: {0}".format(args.bot))
-print("(*) Start!")
 
 if args.mode == "arena":
+    print("(*) Waiting for opponents...")
+    print("/!\ If you exit now, technically we will lose the game")
     env = ArenaEnvironment(args.key)
 else:
     env = TrainingEnvironment(args.key)
@@ -67,3 +69,6 @@ while not env.get_status().finished:
     env.send_action(action)
 
 print("(*) Game over.")
+hero = status.heroes[env.hero_id]
+elo_diff = hero_utility(status, hero.id)
+print("(*) Elo: {0} {1:+.0f}".format(hero.elo, elo_diff))
