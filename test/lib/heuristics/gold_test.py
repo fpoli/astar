@@ -74,12 +74,7 @@ class TestGoldHeuristicValue(unittest.TestCase):
         status = Status(status_dict["game"], map_obj)
 
         heuristic_tuple = heuristic(status)
-        expected_tuple = (
-            7.956029372454674,
-            -8.123279019830743,
-            -23.753175751217366,
-            23.920425398593434
-        )
+        expected_tuple = (8.0, -8.0, -24.0, 24.0)
 
         self.assertEqual(heuristic_tuple, expected_tuple)
 

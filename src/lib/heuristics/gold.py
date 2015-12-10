@@ -29,8 +29,25 @@ def gold_score(status, hero_id, opponent_id):
 
     gold_diff = hero_gold - opponent_gold
 
+    # the game just started --> game_progress = ~0
+    # the game is about to finish --> game_progress = ~1
+    game_progress = status.turn / status.max_turns
+
     # Sigmoid function with codomain (0, 1)
-    return (gold_diff / (1 + abs(gold_diff)) + 1) / 2
+    # This is a good heuristic if the game just started
+    smoothed_value = (gold_diff / (1 + abs(gold_diff)) + 1) / 2
+
+    # Step function
+    # This is a good heuristic if the game is about to finish
+    if gold_diff > 0:
+        step_value = 1
+    elif gold_diff < 0:
+        step_value = 0
+    else:
+        step_value = 0.5
+
+    # Linear combination of the two values, depending on game_progress
+    return smoothed_value * (1 - game_progress) + step_value * game_progress
 
 
 def hero_heuristic(status, hero_id):

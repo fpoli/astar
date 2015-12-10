@@ -12,6 +12,7 @@ class Environment:
         self.server_api = server_api
         self.game_params = game_params
 
+        self.status_text = None
         self.play_url = None
         self.view_url = None
         self.token = None
@@ -35,11 +36,12 @@ class Environment:
             # Decode json
             json_dict = json.loads(res.text)
 
+            self.status_text = res.text
             self.play_url = json_dict["playUrl"]
             self.view_url = json_dict["viewUrl"]
             self.token = json_dict["token"]
-            self.map = Map(json_dict["game"]["board"]["tiles"])
             self.hero_id = json_dict["hero"]["id"] - 1
+            self.map = Map(json_dict["game"]["board"]["tiles"])
             self.status = Status(json_dict["game"], self.map)
         else:
             raise Exception(
@@ -53,6 +55,14 @@ class Environment:
         """
 
         return self.status
+
+    def get_status_text(self):
+        """Get the status of the environment, as text.
+
+        return: the string received by the server.
+        """
+
+        return self.status_text
 
     def send_action(self, action):
         """Change the environment by executing an action.
@@ -76,6 +86,7 @@ class Environment:
             # Decode json
             json_dict = json.loads(res.text)
 
+            self.status_text = res.text
             self.status = Status(json_dict["game"], self.map)
         else:
             raise Exception(

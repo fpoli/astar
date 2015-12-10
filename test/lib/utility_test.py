@@ -19,7 +19,7 @@ class TestUtilityZeroSum(unittest.TestCase):
 
         utility_tuple = utility(status)
 
-        self.assertEqual(
+        self.assertAlmostEqual(
             sum(utility_tuple), 0,
             msg="Utility is {utility}, but the sum is non-zero: {sum}".format(
                 utility=utility_tuple,

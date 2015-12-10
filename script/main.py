@@ -12,6 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
 from lib.environment import TrainingEnvironment, ArenaEnvironment
 from lib.models import Action
 import lib.bots as bots
+from lib.logging import Logger
 
 # Define the command line arguments
 parser = argparse.ArgumentParser(
@@ -53,10 +54,13 @@ else:
     env = TrainingEnvironment(args.key)
 
 bot = bot_class(env.hero_id)
+project_dir = os.path.join(os.path.dirname(__file__), "..")
+logger = Logger(project_dir + "/run", env.get_status().id)
 
-while not env.status.finished:
+while not env.get_status().finished:
     print("(*) View url:", env.view_url)
     status = env.get_status()
+    logger.store_status(status.turn, env.get_status_text())
     print("(*) Status:\n", status, sep="")
     action = bot.think(status)
     print("(*) Action:", action)
