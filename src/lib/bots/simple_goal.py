@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import random
 from .abstract_goal import AbstractGoalBot
 from lib.algorithms import astar
 from lib.models.tile import Tile

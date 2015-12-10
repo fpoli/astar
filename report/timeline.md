@@ -18,3 +18,5 @@ Please update this whenever you do something.
 * 24/11/15 23.30 - 00.30: Regular midnight refactoring (Marco)
 * 28/11/15 10.30 - 12.30: Implementing benchmark, Paranoid algorithm (Federico)
 * 01/12/15 14.00 - 15.00: Fixing and implementing tests for Paranoid (Federico)
+* 02/12/15 14.00 - 15.00: Implementing ParanoidBot (Federico)
+* 02/12/15 18.00 - 19.30: Fixing simulator, implementing copy methods (Federico)

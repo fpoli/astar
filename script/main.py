@@ -5,6 +5,7 @@ import os
 import sys
 import random
 import argparse
+import math
 
 # Add source directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
@@ -70,5 +71,5 @@ while not env.get_status().finished:
 
 print("(*) Game over.")
 hero = status.heroes[env.hero_id]
-elo_diff = hero_utility(status, hero.id)
-print("(*) Elo: {0} {1:+.0f}".format(hero.elo, elo_diff))
+elo_diff = math.floor(hero_utility(status, hero.id))
+print("(*) Elo: {0} {1:+}".format(hero.elo, elo_diff))
