@@ -26,8 +26,8 @@ class Logger:
 
     def _prepare(self):
         base_path = "{0}/{1}".format(self.run_dir, self.game_id)
-        mkdir_p(base_path)
-        mkdir_p(base_path + "/turns")
+        mkdir_parents(base_path)
+        mkdir_parents(base_path + "/turns")
 
     def store_status(self, turn, status_text):
         self._prepare()
