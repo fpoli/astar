@@ -23,6 +23,17 @@ Successivamente, per far partire il client:
 
 	make start
 
+Oppure
+
+	./script/main.py -k `cat bot.key` -b MaxnBot -m training
+	./script/main.py -k `cat bot.key` -b PessimisticBot -m arena
+	...
+	eccetera
+
+Per vedere tutti i parametri:
+
+	./script/main.py -h
+
 
 ## Documentazione
 
