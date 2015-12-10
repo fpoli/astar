@@ -48,3 +48,4 @@ clean:
 	@$(MAKE) $@ --no-print-directory --directory=docs
 	@find . -name '*.pyc' -delete
 	@find . -name '__pycache__' -delete
+	@rm -f main.calltree main.profile
