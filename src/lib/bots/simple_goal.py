@@ -34,60 +34,81 @@ class SimpleGoalBot(AbstractGoalBot):
         Returns:
             Action: an action to reach the goal.
         """
-        hero = status.heroes[self.hero_id]
-        hero_positions = set([h.pos for h in status.heroes])
-
-        zero_const = lambda _: 0
-
-        def succ(node):
-            initial_tile = status.map[node]
-            if initial_tile != Tile.empty:
-                return []
-
-            neighbours = status.map.get_neighbours(node)
-            valid_cells = [
-                pos
-                for pos, tile in neighbours.items()
-                if tile != Tile.wall
-            ]
-            return set(valid_cells) - hero_positions
 
         if isinstance(goal, TavernGoal):
-            is_goal = lambda node: (
-                status.map[node] == Tile.tavern
-            )
-
-            path = astar.search(
-                hero.pos,
-                is_goal,
-                succ,
-                zero_const
-            )
-
-            if path:
-                assert(path[0] == hero.pos)
-                direction = path[1] - hero.pos
-                action = dir_to_action(direction)
-                return action
-
+            path = shortest_path_to_tavern(self.hero_id, status)
         elif isinstance(goal, MineGoal):
-            is_goal = lambda node: (
-                status.map[node] == Tile.mine and
-                status.mine_owner[node] != hero.id
-            )
+            path = shortest_path_to_mine(self.hero_id, status)
 
-            path = astar.search(
-                hero.pos,
-                is_goal,
-                succ,
-                zero_const
-            )
+        if path:
+            direction = path[1] - hero.pos
+            action = dir_to_action(direction)
+            return action
+        else:
+            # No goal can be reached
+            return Action.stay
 
-            if path:
-                assert(path[0] == hero.pos)
-                direction = path[1] - hero.pos
-                action = dir_to_action(direction)
-                return action
 
-        # No goal can be reached
-        return Action.stay
+def shortest_path_to_tavern(hero_id, status):
+    hero = status.heroes[hero_id]
+    hero_positions = set([h.pos for h in status.heroes])
+
+    def succ(node):
+        initial_tile = status.map[node]
+        if initial_tile != Tile.empty:
+            return []
+        neighbours = status.map.get_neighbours(node)
+        valid_cells = [
+            pos
+            for pos, tile in neighbours.items()
+            if tile != Tile.wall
+        ]
+        return set(valid_cells) - hero_positions
+
+    is_goal = lambda node: (
+        status.map[node] == Tile.tavern
+    )
+
+    zero = lambda _: 0
+
+    path = astar.search(
+        hero.pos,
+        is_goal,
+        succ,
+        zero
+    )
+
+    return path
+
+
+def shortest_path_to_mine(hero_id, status):
+    hero = status.heroes[hero_id]
+    hero_positions = set([h.pos for h in status.heroes])
+
+    def succ(node):
+        initial_tile = status.map[node]
+        if initial_tile != Tile.empty:
+            return []
+        neighbours = status.map.get_neighbours(node)
+        valid_cells = [
+            pos
+            for pos, tile in neighbours.items()
+            if tile != Tile.wall
+        ]
+        return set(valid_cells) - hero_positions
+
+    is_goal = lambda node: (
+        status.map[node] == Tile.mine and
+        status.mine_owner[node] != hero.id
+    )
+
+    zero = lambda _: 0
+
+    path = astar.search(
+        hero.pos,
+        is_goal,
+        succ,
+        zero
+    )
+
+    return path
