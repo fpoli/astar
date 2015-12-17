@@ -34,6 +34,7 @@ class SimpleGoalBot(AbstractGoalBot):
         Returns:
             Action: an action to reach the goal.
         """
+        hero = status.heroes[self.hero_id]
 
         if isinstance(goal, TavernGoal):
             path = shortest_path_to_tavern(self.hero_id, status)
