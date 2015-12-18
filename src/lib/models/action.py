@@ -20,6 +20,14 @@ __action_to_dir_conversion = {
     Action.stay: (0, 0)
 }
 
+__dir_to_action_conversion = {
+    (0, -1): Action.north,
+    (0, 1): Action.south,
+    (-1, 0): Action.west,
+    (1, 0): Action.east,
+    (0, 0): Action.stay
+}
+
 
 def str_to_action(s):
     assert(s in __str_to_action_conversion)
@@ -29,3 +37,8 @@ def str_to_action(s):
 def action_to_dir(a):
     assert(a in __action_to_dir_conversion)
     return __action_to_dir_conversion[a]
+
+
+def dir_to_action(d):
+    assert(d in __dir_to_action_conversion)
+    return __dir_to_action_conversion[d]

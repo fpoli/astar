@@ -62,6 +62,18 @@ class Map(EqualityMixin):
 
                 self.__board[x][y] = tile
 
+    def is_outside(self, pos):
+        """Test if a position is outside the board
+
+        Args:
+            pos (tuple): the position.
+
+        Returns:
+            bool: true iff the position is outside the board.
+        """
+        return (pos[0] < 0 or pos[1] < 0 or
+                pos[0] >= self.size or pos[1] >= self.size)
+
     def __getitem__(self, pos):
         """Returns an item in the map.
 
@@ -71,11 +83,32 @@ class Map(EqualityMixin):
         Returns:
             Tile | None: the tile, None if the position is outside the map).
         """
-        if (pos[0] < 0 or pos[1] < 0 or
-                pos[0] >= self.size or pos[1] >= self.size):
+        if self.is_outside(pos):
             return None
         else:
             return self.__board[pos[0]][pos[1]]
+
+    def get_neighbours(self, pos):
+        """Returns a dictionary with the tiles next to a given position.
+
+        Arguments:
+            pos (tuple): the position.
+
+        Returns:
+            {Position -> Tile}: a dictionary with the cells next to pos.
+        """
+        neighbours = {}
+        directions = [
+            Position(+1, 0),
+            Position(-1, 0),
+            Position(0, +1),
+            Position(0, -1)
+        ]
+        for d in directions:
+            new_pos = pos + d
+            if not self.is_outside(new_pos):
+                neighbours[new_pos] = self.__board[new_pos[0]][new_pos[1]]
+        return neighbours
 
     def __str__(self):
         """Pretty map."""
