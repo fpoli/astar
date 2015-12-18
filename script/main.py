@@ -51,7 +51,7 @@ print("(*) Bot: {0}".format(args.bot))
 
 if args.mode == "arena":
     print("(*) Waiting for opponents...")
-    print("/!\ If you exit now, technically we will lose the game")
+    print("/!\ If you exit now we will lose the game")
     env = ArenaEnvironment(args.key)
 else:
     env = TrainingEnvironment(args.key)
