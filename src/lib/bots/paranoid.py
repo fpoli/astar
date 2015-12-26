@@ -42,10 +42,10 @@ class ParanoidBot(BaseBot):
             payoff,
             4,
             self.hero_id,
-            0,
+            self.hero_id,
             4
         )
 
-        action = actions[self.hero_id]
+        action = actions[0]
 
         return action

@@ -24,7 +24,7 @@ class MaxnBot(BaseBot):
             Action: the chosen action.
         """
 
-        turn_limit = status.turn + 4
+        turn_limit = min(status.turn + 4, status.max_turns)
 
         def successor(status):
             children = []
@@ -43,10 +43,10 @@ class MaxnBot(BaseBot):
             status,
             successor,
             self.heuristic.heuristic,
-            0,
+            self.hero_id,
             4
         )
 
-        action = actions[self.hero_id]
+        action = actions[0]
 
         return action

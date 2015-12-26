@@ -6,6 +6,7 @@ from .tile import Tile
 from .tavern import Tavern
 from .mine import Mine
 from .position import Position
+from lib.algorithms import dijkstra
 
 
 class Map(EqualityMixin):
@@ -126,13 +127,52 @@ class Map(EqualityMixin):
         return s
 
     def __precompute_distance_to_tavern(self):
-        pass
+        def succ(node):
+            initial_tile = self[node]
+            if initial_tile == Tile.wall:
+                return []
+            neighbours = self.get_neighbours(node)
+            valid_cells = [
+                pos
+                for pos, tile in neighbours.items()
+                if tile == Tile.empty
+            ]
+            return valid_cells
+
+        self.__tavern_distance = dijkstra.compute_distances(
+            [t.pos for t in self.taverns],
+            succ
+        )
 
     def __precompute_distance_to_mines(self):
-        pass
+        def succ(node):
+            initial_tile = self[node]
+            if initial_tile == Tile.wall:
+                return []
+            neighbours = self.get_neighbours(node)
+            valid_cells = [
+                pos
+                for pos, tile in neighbours.items()
+                if tile == Tile.empty
+            ]
+            return valid_cells
+
+        self.__mine_distance = {}
+        for m in self.mines:
+            self.__mine_distance[m.pos] = dijkstra.compute_distances(
+                [m.pos],
+                succ
+            )
 
     def distance_to_tavern(self, pos):
-        return 0
+        return self.__tavern_distance[pos]
 
-    def distance_to_mines(self, pos, ignored_mines):
-        return 0
+    def distance_to_mines(self, pos, goal_mines):
+        mine_distances = [
+            self.__mine_distance[mine_pos][pos]
+            for mine_pos in goal_mines
+        ]
+        if mine_distances:
+            return min(mine_distances)
+        else:
+            return float("inf")

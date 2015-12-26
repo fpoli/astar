@@ -101,7 +101,12 @@ def shortest_path_to_mine(hero_id, status):
         status.mine_owner[node] != hero.id
     )
 
-    heuristic = lambda pos: status.map.distance_to_mines(pos, [])
+    goal_mines = [
+        pos
+        for pos, owner in status.mine_owner.items()
+        if owner != hero_id
+    ]
+    heuristic = lambda pos: status.map.distance_to_mines(pos, goal_mines)
 
     path = astar.search(
         hero.pos,
