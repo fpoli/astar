@@ -3,12 +3,17 @@
 from random import shuffle
 from .base import BaseBot
 from lib.algorithms.paranoid import paranoid
-from lib.heuristics.gold import hero_heuristic
 from lib.models.action import Action
 from lib.simulator import simulate
+from lib.heuristics import EloGoldHeuristic
 
 
 class ParanoidBot(BaseBot):
+    def __init__(self, hero_id, heuristic=None):
+        if heuristic is None:
+            heuristic = EloGoldHeuristic()
+        super().__init__(hero_id, heuristic)
+
     def think(self, status):
         """Chooses an action, using paranoid.
 
@@ -29,7 +34,7 @@ class ParanoidBot(BaseBot):
             return children
 
         def payoff(status):
-            return hero_heuristic(status, self.hero_id)
+            return self.heuristic.hero_heuristic(status, self.hero_id)
 
         happyness, actions = paranoid(
             status,

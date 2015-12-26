@@ -2,6 +2,9 @@
 
 
 class Goal:
+    """Abstract goal class, superclass of all the actual goals.
+    """
+
     def __init__(self, hero_id=None):
         """ Constructor.
 

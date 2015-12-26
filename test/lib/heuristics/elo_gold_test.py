@@ -3,13 +3,15 @@
 import unittest
 from test import generate_tests
 from status_samples import get_status_samples, get_status_samples_dict
-from lib.heuristics.gold import gold_score, heuristic
+from lib.heuristics.elo_gold import EloGoldHeuristic
 from lib.models import Status, Map
 from lib.utility import utility
 
 
 @generate_tests
-class TestGoldHeuristicZeroSum(unittest.TestCase):
+class TestEloGoldHeuristicZeroSum(unittest.TestCase):
+    def setUp(self):
+        self.heuristic = EloGoldHeuristic()
 
     def perform_test(self, status_dict):
         """Test that the heuristic is a zero sum tuple"""
@@ -18,7 +20,7 @@ class TestGoldHeuristicZeroSum(unittest.TestCase):
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
 
-        heuristic_tuple = heuristic(status)
+        heuristic_tuple = self.heuristic.heuristic(status)
 
         self.assertAlmostEqual(
             sum(heuristic_tuple), 0,
@@ -32,7 +34,9 @@ class TestGoldHeuristicZeroSum(unittest.TestCase):
 
 
 @generate_tests
-class TestGoldHeuristicOnLeafs(unittest.TestCase):
+class TestEloGoldHeuristicOnLeafs(unittest.TestCase):
+    def setUp(self):
+        self.heuristic = EloGoldHeuristic()
 
     def perform_test(self, status_dict):
         """Test that the heuristic on leafs is consistent with the utility"""
@@ -44,7 +48,7 @@ class TestGoldHeuristicOnLeafs(unittest.TestCase):
         # Simulate a final status
         status.turn = status.max_turns
 
-        heuristic_tuple = heuristic(status)
+        heuristic_tuple = self.heuristic.heuristic(status)
         utility_tuple = utility(status)
 
         # Check that heuristic and utility are consistent
@@ -64,6 +68,8 @@ class TestGoldHeuristicOnLeafs(unittest.TestCase):
 
 
 class TestGoldHeuristicValue(unittest.TestCase):
+    def setUp(self):
+        self.heuristic = EloGoldHeuristic()
 
     def test_heuristic_value_yupgvpr5_2400(self):
         """Test the heuristic value on yupgvpr5 2400"""
@@ -73,7 +79,7 @@ class TestGoldHeuristicValue(unittest.TestCase):
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
 
-        heuristic_tuple = heuristic(status)
+        heuristic_tuple = self.heuristic.heuristic(status)
         expected_tuple = (8.0, -8.0, -24.0, 24.0)
 
         self.assertEqual(heuristic_tuple, expected_tuple)
@@ -86,13 +92,15 @@ class TestGoldHeuristicValue(unittest.TestCase):
         map_obj = Map(status_dict["game"]["board"]["tiles"])
         status = Status(status_dict["game"], map_obj)
 
-        heuristic_tuple = heuristic(status)
+        heuristic_tuple = self.heuristic.heuristic(status)
 
         self.assertEqual(heuristic_tuple, (0, 0, 0, 0))
 
 
 @generate_tests
-class TestGoldScoreCodomain(unittest.TestCase):
+class TestHeroScoreCodomain(unittest.TestCase):
+    def setUp(self):
+        self.heuristic = EloGoldHeuristic()
 
     def perform_test(self, status_dict):
         """Test that the values of gold_score are between 0 and 1"""
@@ -103,7 +111,7 @@ class TestGoldScoreCodomain(unittest.TestCase):
 
         for hero_id in range(4):
             for opponent_id in range(4):
-                score = gold_score(status, hero_id, opponent_id)
+                score = self.heuristic.hero_score(status, hero_id, opponent_id)
                 self.assertGreaterEqual(score, 0)
                 self.assertLessEqual(score, 1)
 

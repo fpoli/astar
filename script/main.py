@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
 from lib.environment import TrainingEnvironment, ArenaEnvironment
 from lib.models import Action
 import lib.bots as bots
+import lib.heuristics as heuristics
 from lib.logging import Logger
 from lib.utility import hero_utility
 
@@ -45,6 +46,7 @@ args = parser.parse_args()
 # We don't want to discover that the bot class does not exist when the game
 # already started.
 bot_class = getattr(bots, args.bot)
+heurisitc = heuristics.EloGoldHeuristic()
 
 print("(*) Game mode: {0}".format(args.mode))
 print("(*) Bot: {0}".format(args.bot))
@@ -56,7 +58,7 @@ if args.mode == "arena":
 else:
     env = TrainingEnvironment(args.key)
 
-bot = bot_class(env.hero_id)
+bot = bot_class(env.hero_id, heurisitc)
 project_dir = os.path.join(os.path.dirname(__file__), "..")
 logger = Logger(project_dir + "/run", env.get_status().id)
 

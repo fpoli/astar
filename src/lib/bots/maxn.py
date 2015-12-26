@@ -3,12 +3,17 @@
 from random import shuffle
 from .base import BaseBot
 from lib.algorithms.maxn import maxn
-from lib.heuristics.gold import heuristic
 from lib.models.action import Action
 from lib.simulator import simulate
+from lib.heuristics import EloGoldHeuristic
 
 
 class MaxnBot(BaseBot):
+    def __init__(self, hero_id, heuristic=None):
+        if heuristic is None:
+            heuristic = EloGoldHeuristic()
+        super().__init__(hero_id, heuristic)
+
     def think(self, status):
         """Chooses an action, using maxn.
 
@@ -37,7 +42,7 @@ class MaxnBot(BaseBot):
         happyness, actions = maxn(
             status,
             successor,
-            heuristic,
+            self.heuristic.heuristic,
             0,
             4
         )
