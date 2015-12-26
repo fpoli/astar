@@ -32,6 +32,11 @@ parser.add_argument(
     help="the bot to use in the game",
 )
 parser.add_argument(
+    "-e", "--heuristic",
+    default="EloGoldHeuristic",
+    help="the heuristic to use in the bot",
+)
+parser.add_argument(
     "-m", "--mode",
     default="training",
     choices=["training", "arena"],
@@ -46,7 +51,8 @@ args = parser.parse_args()
 # We don't want to discover that the bot class does not exist when the game
 # already started.
 bot_class = getattr(bots, args.bot)
-heurisitc = heuristics.EloGoldHeuristic()
+heuristic_class = getattr(heuristics, args.heuristic)
+heurisitc = heuristic_class()
 
 print("(*) Game mode: {0}".format(args.mode))
 print("(*) Bot: {0}".format(args.bot))

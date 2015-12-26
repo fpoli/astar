@@ -25,7 +25,8 @@ Successivamente, per far partire il client:
 
 Oppure
 
-	./script/main.py -k `cat bot.key` -b MaxnBot -m training
+	./script/main.py -k `cat bot.key` -b MaxnBot
+	./script/main.py -k `cat bot.key` -b MaxnBot -e GoldHeuristic -m training
 	./script/main.py -k `cat bot.key` -b PessimisticBot -m arena
 	...
 	eccetera
