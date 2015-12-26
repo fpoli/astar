@@ -15,6 +15,7 @@ from lib.environment import TrainingEnvironment
 from lib.models import Action, Map, Status
 from lib.simulator import simulate
 import lib.bots as bots
+import lib.heuristics as heuristics
 
 
 def report(measurements):
@@ -25,9 +26,12 @@ def report(measurements):
 
 # Build sample models
 samples_status = []
+game_maps = {}
 for status_dict in get_status_samples():
-    map_obj = Map(status_dict["game"]["board"]["tiles"])
-    status = Status(status_dict["game"], map_obj)
+    game_id = status_dict["game"]["id"]
+    if game_id not in game_maps:
+        game_maps[game_id] = Map(status_dict["game"]["board"]["tiles"])
+    status = Status(status_dict["game"], game_maps[game_id])
     samples_status.append(status)
 
 #
@@ -49,14 +53,25 @@ print(report(measurements))
 # 2. Measure Bot speed
 #
 bots = [
-    bots.RandomBot,
-    bots.MaxnBot,
-    bots.ParanoidBot,
-    bots.SimpleGoalBot
+    (bots.RandomBot, None),
+    (bots.SimpleGoalBot, None),
+    (bots.MaxnBot, heuristics.GoldHeuristic),
+    (bots.MaxnBot, heuristics.EloGoldHeuristic),
+    (bots.MaxnBot, heuristics.MineGoldHeuristic),
+    (bots.ParanoidBot, heuristics.GoldHeuristic),
+    (bots.ParanoidBot, heuristics.EloGoldHeuristic),
+    (bots.ParanoidBot, heuristics.MineGoldHeuristic),
 ]
-for bot_class in bots:
-    print("(*) {0} speed".format(bot_class.__name__))
-    bot = bot_class(0)
+for bot_class, heuristic_class in bots:
+    if heuristic_class is None:
+        print("(*) {} speed".format(bot_class.__name__))
+        bot = bot_class(0)
+    else:
+        print("(*) {} + {} speed".format(
+            bot_class.__name__,
+            heuristic_class.__name__
+        ))
+        bot = bot_class(0, heuristic_class())
     t = Timer(
         lambda: bot.think(random.choice(samples_status))  # a random state
     )
