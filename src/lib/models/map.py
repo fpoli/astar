@@ -37,6 +37,8 @@ class Map(EqualityMixin):
         self.__board = None
         self.__fill_board(board)
 
+        self.__tavern_distance = None
+        self.__mine_distance = None
         self.__precompute_distance_to_tavern()
         self.__precompute_distance_to_mines()
 
@@ -127,6 +129,8 @@ class Map(EqualityMixin):
         return s
 
     def __precompute_distance_to_tavern(self):
+        """ Precompute self.__tavern_distance lookup table.
+        """
         def succ(node):
             initial_tile = self[node]
             if initial_tile == Tile.wall:
@@ -145,6 +149,8 @@ class Map(EqualityMixin):
         )
 
     def __precompute_distance_to_mines(self):
+        """ Precompute self.__mine_distance lookup table.
+        """
         def succ(node):
             initial_tile = self[node]
             if initial_tile == Tile.wall:
@@ -165,9 +171,26 @@ class Map(EqualityMixin):
             )
 
     def distance_to_tavern(self, pos):
+        """ Returns the distance from pos to the nearest tavern.
+
+        Arguments:
+            pos (Position): the start position.
+
+        Returns:
+            int: the manhattan distance to the nearest tavern.
+        """
         return self.__tavern_distance[pos]
 
     def distance_to_mines(self, pos, goal_mines):
+        """ Returns the distance from pos to the nearest mine in a list.
+
+        Arguments:
+            pos (Position): the start position.
+            goal_mines ([Position]): the mines that are valid destinations.
+
+        Returns:
+            int: the manhattan distance to the nearest goal mine.
+        """
         mine_distances = [
             self.__mine_distance[mine_pos][pos]
             for mine_pos in goal_mines
