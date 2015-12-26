@@ -32,9 +32,12 @@ class Map(EqualityMixin):
 
         self.taverns = []
         self.mines = []
-        self.__board = None
 
+        self.__board = None
         self.__fill_board(board)
+
+        self.__precompute_distance_to_tavern()
+        self.__precompute_distance_to_mines()
 
     def __fill_board(self, board):
         # Prepare the board
@@ -121,3 +124,15 @@ class Map(EqualityMixin):
             s += "|\n"
         s += " " + "-" * (self.size)
         return s
+
+    def __precompute_distance_to_tavern(self):
+        pass
+
+    def __precompute_distance_to_mines(self):
+        pass
+
+    def distance_to_tavern(self, pos):
+        return 0
+
+    def distance_to_mines(self, pos, ignored_mines):
+        return 0

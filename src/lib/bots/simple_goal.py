@@ -70,13 +70,11 @@ def shortest_path_to_tavern(hero_id, status):
         status.map[node] == Tile.tavern
     )
 
-    zero = lambda _: 0
-
     path = astar.search(
         hero.pos,
         is_goal,
         succ,
-        zero
+        status.map.distance_to_tavern
     )
 
     return path
@@ -103,13 +101,13 @@ def shortest_path_to_mine(hero_id, status):
         status.mine_owner[node] != hero.id
     )
 
-    zero = lambda _: 0
+    heuristic = lambda pos: status.map.distance_to_mines(pos, [])
 
     path = astar.search(
         hero.pos,
         is_goal,
         succ,
-        zero
+        heuristic
     )
 
     return path
