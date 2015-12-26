@@ -77,3 +77,13 @@ Consuntivo orario
 - Implementazione bot: (...)
 - Implementazione euristiche: (...)
 - Stesura relazione: (...)
+
+
+Riferimenti
+-----------
+
+- Semplice bot open source "di partenza": https://github.com/ornicar/vindinium-starter-python
+- Libreria open source per Vindinium che abbiamo usato: https://github.com/renatopp/vindinium-python
+- Ricerca MaxN: "An Algorithmic Solution of N-Person Games", Luckhardt-Irani, 1986
+- Ricerca Paranoid: "On Pruning Techniques for Multi-Player Games", Sturtevant-Korf, 2000
+- Euristica MineGold: https://www.reddit.com/r/vindinium/comments/2kgsx4/a_chat_with_the_creator_of_the_best_performing/
