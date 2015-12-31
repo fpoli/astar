@@ -20,3 +20,4 @@ Please update this whenever you do something.
 * 01/12/15 14.00 - 15.00: Fixing and implementing tests for Paranoid (Federico)
 * 02/12/15 14.00 - 15.00: Implementing ParanoidBot (Federico)
 * 02/12/15 18.00 - 19.30: Fixing simulator, implementing copy methods (Federico)
+* 30/12/15 10.00 - 14.00: Working on HTML report (Marco)
