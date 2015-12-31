@@ -7,9 +7,13 @@ Modellazione
 
 (Come abbiamo modellato ambiente, agente, azioni, sensori)
 
+### Ambiente
 
-Agenti
-------
+### Agente
+
+
+Strategie
+---------
 
 ### RandomBot
 
