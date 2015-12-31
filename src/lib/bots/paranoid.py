@@ -40,7 +40,7 @@ class ParanoidBot(BaseBot):
             status,
             successor,
             payoff,
-            4,
+            5,  # max_depth
             self.hero_id,
             self.hero_id,
             4
