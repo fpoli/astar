@@ -80,7 +80,7 @@ class TestGoldHeuristicValue(unittest.TestCase):
         status = Status(status_dict["game"], map_obj)
 
         heuristic_tuple = self.heuristic.heuristic(status)
-        expected_tuple = (8.0, -8.0, -24.0, 24.0)
+        expected_tuple = (8.0, -8.0, -8.0, 8.0)
 
         self.assertEqual(heuristic_tuple, expected_tuple)
 

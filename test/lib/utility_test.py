@@ -42,7 +42,7 @@ class TestUtilityValue(unittest.TestCase):
 
         utility_tuple = utility(status)
 
-        self.assertEqual(utility_tuple, (8, -8, -24, 24))
+        self.assertEqual(utility_tuple, (8, -8, -8, 8))
 
     def test_utility_value_nztclzmi_0(self):
         """Test the utility value on nztclzmi 0"""

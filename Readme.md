@@ -28,6 +28,7 @@ Oppure
 	./script/main.py -k `cat bot.key` -b MaxnBot
 	./script/main.py -k `cat bot.key` -b MaxnBot -e GoldHeuristic -m training
 	./script/main.py -k `cat bot.key` -b PessimisticBot -m arena
+	./script/main.py -k `cat bot.key` -b PessimisticBot -e MineGoldHeuristic -m arena --number 3
 	...
 	eccetera
 

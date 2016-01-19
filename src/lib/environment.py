@@ -17,7 +17,6 @@ class Environment:
         self.view_url = None
         self.token = None
         self.map = None
-        self.hero = None
         self.status = None
         self.hero_id = None
 

@@ -78,10 +78,10 @@ def hero_utility(status, hero_id, scoring_function=calculate_score):
         hero_elo = hero.elo
 
     for opponent_id in range(4):
-        if opponent_id == hero_id:
-            continue
-
         opponent = status.heroes[opponent_id]
+
+        if opponent.name == hero.name:
+            continue
 
         hero_score = scoring_function(status, hero_id, opponent_id)
 

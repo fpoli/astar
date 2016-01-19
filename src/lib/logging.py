@@ -19,12 +19,17 @@ def mkdir_parents(path):
 
 
 class Logger:
-    def __init__(self, run_dir, game_id):
+    def __init__(self, run_dir):
         self.run_dir = run_dir
-        self.game_id = game_id
+        self.game_id = None
+        self.header = {}
         self.data = []
 
+    def set_game_id(self, game_id):
+        self.game_id = game_id
+
     def _prepare(self):
+        assert(self.game_id is not None)
         base_path = "{0}/{1}".format(self.run_dir, self.game_id)
         mkdir_parents(base_path)
         mkdir_parents(base_path + "/turns")
@@ -39,7 +44,17 @@ class Logger:
         with open(filename, "w") as out_file:
             out_file.write(status_text)
 
-    def store_value(timestamp=None, **kwargs):
+    def set_header(self, timestamp=None, **kwargs):
+        values = kwargs
+
+        if timestamp is not None:
+            if timestamp is True:
+                timestamp = time.time()
+            values["timestamp"] = timestamp
+
+        self.header.update(values)
+
+    def append_data(self, timestamp=None, **kwargs):
         values = kwargs
 
         if timestamp is not None:
@@ -49,7 +64,7 @@ class Logger:
 
         self.data.append(values)
 
-    def write_values(self):
+    def write_data(self):
         self._prepare()
         filename = "{run}/{gid}/data.json".format(
             run=self.run_dir,
@@ -57,5 +72,6 @@ class Logger:
         )
 
         with open(filename, "w") as out_file:
-            text = json.dumps(self.data)
+            self.header["data"] = self.data
+            text = json.dumps(self.header)
             out_file.write(text)
