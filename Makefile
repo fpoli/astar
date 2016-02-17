@@ -9,10 +9,6 @@ BOT = "MaxnBot"
 
 default: start
 
-report:
-	@echo "(*) Generate report..."
-	@$(MAKE) $@ --no-print-directory --directory=report
-
 start:
 	@echo "(*) Start bot..."
 	@python3 script/main.py --key "$(BOT_KEY)" --bot "$(BOT)"

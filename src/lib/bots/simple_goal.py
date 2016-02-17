@@ -1,13 +1,15 @@
 # -*- coding: UTF-8 -*-
 
+from enum import Enum
 from .abstract_goal import AbstractGoalBot
 from lib.algorithms import astar
 from lib.models.tile import Tile
 from lib.models.action import Action, dir_to_action
-from lib.goals import TavernGoal, MineGoal
 
 
 class SimpleGoalBot(AbstractGoalBot):
+    goals = Enum("goals", "Tavern Mine")
+
     def choose_goal(self, status):
         """Chooses a goal for the given status.
 
@@ -20,9 +22,9 @@ class SimpleGoalBot(AbstractGoalBot):
         hero = status.heroes[self.hero_id]
 
         if hero.life <= 50:
-            return TavernGoal(self.hero_id)
+            return SimpleGoalBot.goals.Tavern
         else:
-            return MineGoal(self.hero_id)
+            return SimpleGoalBot.goals.Mine
 
     def action_for_goal(self, status, goal):
         """Chooses an action to reach a goal.
@@ -36,9 +38,9 @@ class SimpleGoalBot(AbstractGoalBot):
         """
         hero = status.heroes[self.hero_id]
 
-        if isinstance(goal, TavernGoal):
+        if goal is SimpleGoalBot.goals.Tavern:
             path = shortest_path_to_tavern(self.hero_id, status)
-        elif isinstance(goal, MineGoal):
+        elif goal is SimpleGoalBot.goals.Mine:
             path = shortest_path_to_mine(self.hero_id, status)
 
         if path:
