@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 
 from copy import copy
-from .hero import Hero
-from .map import Map
-from .tavern import Tavern
-from .mine import Mine
-from .tile import Tile
+from lib.models.hero import Hero
+from lib.models.map import Map
+from lib.models.tavern import Tavern
+from lib.models.mine import Mine
+from lib.models.tile import Tile
 from lib.equality_mixin import EqualityMixin
 
 

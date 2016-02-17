@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .position import Position
+from lib.models.position import Position
 from lib.equality_mixin import EqualityMixin
 
 

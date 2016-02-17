@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .base import BaseBot
+from lib.bots.base import BaseBot
 
 
 class AbstractGoalBot(BaseBot):

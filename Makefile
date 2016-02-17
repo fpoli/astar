@@ -26,16 +26,16 @@ benchmark:
 
 linter:
 	@echo "(*) Run linter..."
-	@pep8 --ignore="E221" src/ test/ script/
+	@pep8 --ignore="E221" lib/ test/ script/
 
 test:
 	@echo "(*) Run tests..."
-	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/src/:$(CURR_DIR)/test/" \
+	@PYTHONPATH="$${PYTHONPATH}:$(CURR_DIR)/test/" \
 		python3 -m "nose" --nocapture -w test/
 
 docs: clean
 	@echo "(*) Generate documentation..."
-	@cd src/ && sphinx-apidoc --module-first --force --separate --output-dir=../docs/source/api/ .
+	@sphinx-apidoc --module-first --force --separate --output-dir=../docs/source/api/ .
 	@$(MAKE) html --no-print-directory --directory=docs
 
 clean:

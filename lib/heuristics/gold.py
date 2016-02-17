@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .abstract_heurisitc import AbstractHeuristic
+from lib.heuristics.abstract_heurisitc import AbstractHeuristic
 
 
 class GoldHeuristic(AbstractHeuristic):

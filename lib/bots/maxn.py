@@ -1,21 +1,21 @@
 # -*- coding: UTF-8 -*-
 
 from random import shuffle
-from .base import BaseBot
-from lib.algorithms.paranoid import paranoid
+from lib.bots.base import BaseBot
+from lib.algorithms.maxn import maxn
 from lib.models.action import Action
 from lib.simulator import simulate
 from lib.heuristics import EloGoldHeuristic
 
 
-class ParanoidBot(BaseBot):
+class MaxnBot(BaseBot):
     def __init__(self, hero_id, heuristic=None):
         if heuristic is None:
             heuristic = EloGoldHeuristic()
         super().__init__(hero_id, heuristic)
 
     def think(self, status):
-        """Chooses an action, using paranoid.
+        """Chooses an action, using maxn.
 
         Arguments:
             status (Status): the game status.
@@ -24,24 +24,25 @@ class ParanoidBot(BaseBot):
             Action: the chosen action.
         """
 
+        turn_limit = min(status.turn + 4, status.max_turns)
+
         def successor(status):
+            children = []
+
+            if status.turn >= turn_limit:
+                return children
+
             actions = list(Action)
             shuffle(actions)
-            children = []
             for action in actions:
                 next_status = simulate(status, action)
                 children.append((next_status, action))
             return children
 
-        def payoff(status):
-            return self.heuristic.hero_heuristic(status, self.hero_id)
-
-        happyness, actions = paranoid(
+        happyness, actions = maxn(
             status,
             successor,
-            payoff,
-            5,  # max_depth
-            self.hero_id,
+            self.heuristic.heuristic,
             self.hero_id,
             4
         )

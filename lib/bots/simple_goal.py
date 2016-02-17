@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from enum import Enum
-from .abstract_goal import AbstractGoalBot
+from lib.bots.abstract_goal import AbstractGoalBot
 from lib.algorithms import astar
 from lib.models.tile import Tile
 from lib.models.action import Action, dir_to_action

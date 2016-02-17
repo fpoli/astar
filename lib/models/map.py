@@ -2,10 +2,10 @@
 
 from math import sqrt
 from lib.equality_mixin import EqualityMixin
-from .tile import Tile
-from .tavern import Tavern
-from .mine import Mine
-from .position import Position
+from lib.models.tile import Tile
+from lib.models.tavern import Tavern
+from lib.models.mine import Mine
+from lib.models.position import Position
 from lib.algorithms import dijkstra
 
 

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-from .abstract_heurisitc import AbstractHeuristic
-from .elo_mixin import EloHeuristicMixin, score_by_gold_diff
+from lib.heuristics.abstract_heurisitc import AbstractHeuristic
+from lib.heuristics.elo_mixin import EloHeuristicMixin, score_by_gold_diff
 
 
 class EloGoldHeuristic(EloHeuristicMixin, AbstractHeuristic):

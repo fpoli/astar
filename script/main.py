@@ -9,7 +9,7 @@ import signal
 import time
 
 # Add source directory to path
-sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from lib.environment import TrainingEnvironment, ArenaEnvironment
 from lib.models import Action

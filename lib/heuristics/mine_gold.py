@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .abstract_heurisitc import AbstractHeuristic
+from lib.heuristics.abstract_heurisitc import AbstractHeuristic
 from lib.algorithms import astar
 from lib.models.tile import Tile
 from lib.models.action import Action, dir_to_action

@@ -1,16 +1,8 @@
-# Progetto Intelligenza Artificiale 2015/2016
+# AStar: Progetto Intelligenza Artificiale 2015/2016
 
 Vindinium (http://vindinium.org/)
 
 [![Build Status](https://magnum.travis-ci.com/fpoli/ia1516.svg?token=XpqKLcynjTRxpC4xqqri)](https://magnum.travis-ci.com/fpoli/ia1516)
-
-
-## Relazione
-
-Il comando `make report` genera la relazione:
-
-- HTML(5) `report/report.html` (personalizzabile con CSS e template)
-- PDF `report/report.pdf`
 
 
 ## Utilizzo
@@ -80,6 +72,6 @@ Per installare le dipendenze su `Ubuntu 14.04`:
 
 The code is based on [renatopp/vindinium-python](https://github.com/renatopp/vindinium-python).
 
-Copyright 2015.
+Copyright 2015-2016.
 
 Distributed under the GNU GPL version 3, see [LICENSE.txt](LICENSE.txt)

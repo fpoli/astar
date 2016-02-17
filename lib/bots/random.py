@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import random
-from .base import BaseBot
+from lib.bots.base import BaseBot
 
 
 class RandomBot(BaseBot):

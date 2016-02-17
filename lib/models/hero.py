@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 from lib.equality_mixin import EqualityMixin
-from .position import Position
-from .action import str_to_action
+from lib.models.position import Position
+from lib.models.action import str_to_action
 
 
 class Hero(EqualityMixin):

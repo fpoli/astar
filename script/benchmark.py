@@ -7,7 +7,7 @@ import random
 from timeit import Timer
 
 # Add source directories to path
-sys.path.append(os.path.join(os.path.dirname(__file__), "../src"))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(os.path.join(os.path.dirname(__file__), "../test"))
 
 from status_samples import get_status_samples
