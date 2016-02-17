@@ -1,9 +1,9 @@
-.. IA1516 documentation master file, created by
+.. AStar documentation master file, created by
    sphinx-quickstart on Wed Nov  4 14:55:54 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to IA1516's documentation!
+Welcome to AStar's documentation!
 ==================================
 
 Contents:

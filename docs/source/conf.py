@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# IA1516 documentation build configuration file, created by
+# AStar documentation build configuration file, created by
 # sphinx-quickstart on Wed Nov  4 14:55:54 2015.
 #
 # This file is execfile()d with the current directory set to its

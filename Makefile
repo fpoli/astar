@@ -35,7 +35,7 @@ test:
 
 docs: clean
 	@echo "(*) Generate documentation..."
-	@sphinx-apidoc --module-first --force --separate --output-dir=../docs/source/api/ .
+	@sphinx-apidoc --module-first --force --separate --output-dir=docs/source/api/ .
 	@$(MAKE) html --no-print-directory --directory=docs
 
 clean:
