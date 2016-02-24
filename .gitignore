@@ -15,7 +15,7 @@ docs/source/api/
 docs/build/
 
 # Secret files
-bot.key
+*.key
 
 # Profiling files
 *.profile
