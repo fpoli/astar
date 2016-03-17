@@ -1,6 +1,6 @@
 # AStar
 
-[![Build Status](https://magnum.travis-ci.com/fpoli/astar.svg?token=XpqKLcynjTRxpC4xqqri)](https://magnum.travis-ci.com/fpoli/astar)
+[![Build Status](https://travis-ci.org/fpoli/astar.svg?branch=master)](https://travis-ci.org/fpoli/astar)
 
 AStar is an artificial intelligence project aimed at developing bots for the [Vindinium](http://vindinium.org/) programming challenge.
 
